@@ -58,7 +58,8 @@ Front-End: To be decided, electron?
 ### Station Object:
 - Day object array - to hold data from that row in csv
 - Node: to hold the connections that will be made, and the %similarity based on given tolerances.
-- object ID
+- Variables:
+    - object ID
     - memory id
     - logitude and latitude
     - increment connections
