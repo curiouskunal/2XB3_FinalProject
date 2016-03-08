@@ -17,6 +17,13 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
     CheckRows(inputCSV,'temp/tempCSV1.csv',true)
 
+    CheckShit("temp/tempCSV1.csv")
+
+    File.delete("temp/tempCSV1.csv")
+
+    puts outputCSV
+
+
   end
 
 
@@ -73,20 +80,25 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     end
 
     # TODO - delete this, dont want to print this @ EOF.
-    open(outputCSV, 'a') { |f| f.puts "----------------------------------"}
+    #open(outputCSV, 'a') { |f| f.puts "----------------------------------"}
   end
 
 
-  #TODO - make funciton to check if stations are compleet
-  # def checkStations(inputCSV,outputCSV,keepHeader)
-  #   CSV.foreach(inputCSV, headers:(!keepHeader)) do |row|
-  #
-  #   end
-  # end
+
+
+# ******* PEDRO HERE *********
+
+
+  #TODO - make funciton to check if stations are complete
+  def CheckShit(inputCSV)
+
+    CSV.foreach(inputCSV, headers:true)do |weather|
+
+      puts weather.inspect
+    end
+  end
 
 end
-
-
 
 
 
