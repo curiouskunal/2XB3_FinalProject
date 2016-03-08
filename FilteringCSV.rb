@@ -16,10 +16,10 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
 =end
 
-  def parseCSVdata(inputCSV, outputCSV)
+  def parseCSVdata(inputCSV, outputCSV, numOfDays)
 
     # set constants
-    numOfDays = 730 # 2 years
+    #numOfDays = 730 # 2 years
     tempFile = 'data/tempCSV.csv'
 
     puts "started filtering #{inputCSV} ..."
@@ -65,6 +65,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
   end
 
   # Method checks each row in inputCSV for completeness then saves all good rows to outputCSV
+  # Creates a temp file(outputCSV) to hold all valid rows of inputCSV
   def CheckRows(inputCSV,outputCSV)
 
     # open inputCSV file and iterate row by row
@@ -154,4 +155,4 @@ end
 # --- MAIN ---
 
 x = FilteringCSV.new
-x.parseCSVdata('data/california.csv','data/caliFinal.csv')
+x.parseCSVdata('data/Testing.csv','data/caliFinal.csv',30)
