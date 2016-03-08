@@ -1,3 +1,6 @@
+# author: Kunal Shah
+# version: 1.4
+
 class FilteringCSV
   require 'csv'
 
@@ -13,16 +16,20 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
 =end
 
-  def parceCSVdata(inputCSV, outputCSV)
+  def parseCSVdata(inputCSV, outputCSV)
 
-    CheckRows(inputCSV,'temp/tempCSV1.csv',true)
+    # set constants
+    numOfDays = 730 # 2 years
+    tempFile = 'data/tempCSV.csv'
 
-    CheckShit("temp/tempCSV1.csv")
 
-    File.delete("temp/tempCSV1.csv")
+    CheckRows(inputCSV,tempFile)
 
-    puts outputCSV
+    validStationsArr = GetValidStations(tempFile, numOfDays)
 
+    GenerateOutputFile(tempFile, outputCSV, validStationsArr)
+
+    File.delete(tempFile)
 
   end
 
@@ -53,15 +60,11 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     return true
   end
 
-  # Method checks each row in inputCSV for completeness then saves all good rows to
-  # outputCSV, keepHeader:
-  def CheckRows(inputCSV,outputCSV,keepHeader)
-
-    # row counter
-    index = 0
+  # Method checks each row in inputCSV for completeness then saves all good rows to outputCSV
+  def CheckRows(inputCSV,outputCSV)
 
     # open inputCSV file and iterate row by row
-    CSV.foreach(inputCSV, headers:(!keepHeader)) do |row|
+    CSV.foreach(inputCSV) do |row|
 
       # by default we want to save row unless changed
       saveLine = true
@@ -69,33 +72,75 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
       #isPrintLine returns bool. true = stores whether or not the line will be printed
       saveLine = isPrintLine(row)
 
-      # increment row number
-      index += 1
-
       # if saveline is true. Then save row to output CSV file
       if saveLine
-        open(outputCSV, 'a') { |f| f.puts row.to_s}
+        open(outputCSV, 'a') { |f| f.puts row.join(",")}
       end
 
     end
 
-    # TODO - delete this, dont want to print this @ EOF.
-    #open(outputCSV, 'a') { |f| f.puts "----------------------------------"}
   end
 
+  # Method checks if there are enough days of data for each station.
+  # if a Station has "requiredDays" of data then add to validStations array
+  # returns validStations
+  def GetValidStations(inputCSV, requiredDays )
 
+    # initialize variables
+    validStations = []
+    currentStation = ""
+    stationCounter = 0
 
+    CSV.foreach(inputCSV, headers:true) do |row|
 
-# ******* PEDRO HERE *********
+      # set station ID
+      stationID = row[0].to_s
 
+      # if stationID doesnt match currentStation then
+      if stationID != currentStation
 
-  #TODO - make funciton to check if stations are complete
-  def CheckShit(inputCSV)
+        # check if station has enough data and append to array
+        if stationCounter >= requiredDays
+          validStations.push(currentStation)
+        end
 
-    CSV.foreach(inputCSV, headers:true)do |weather|
+        # set new current station and reset counter to 0.
+        currentStation = stationID
+        stationCounter = 0
+      end
+      # increment counter
+      stationCounter += 1
 
-      puts weather.inspect
     end
+
+    # append last "current station" if it has enough days of data
+    if stationCounter >= requiredDays
+      validStations.push(currentStation)
+    end
+
+    # return array of stations that have enough days of data.
+    return validStations
+  end
+
+  # Method to append all valid station's data points to final filtered output file
+  def GenerateOutputFile(inputCSV, outputCSV, validStations)
+
+    printHeaders = false
+
+    CSV.foreach(inputCSV) do |row|
+      # append header line only once to file
+      if !printHeaders
+        open(outputCSV, 'a') { |f| f.puts row.join(",")}
+        printHeaders = true
+      end
+
+      # if StationID is in validStations list then add row to output file
+      if validStations.include?(row[0])
+        open(outputCSV, 'a') { |f| f.puts row.join(",")}
+      end
+
+    end
+
   end
 
 end
@@ -105,4 +150,4 @@ end
 # --- MAIN ---
 
 x = FilteringCSV.new
-x.parceCSVdata('data/Testing.csv','data/caliFinal.csv')
+x.parseCSVdata('data/california.csv','data/caliFinal.csv')
