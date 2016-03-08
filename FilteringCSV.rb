@@ -22,15 +22,19 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     numOfDays = 730 # 2 years
     tempFile = 'data/tempCSV.csv'
 
-
+    puts "started filtering #{inputCSV} ..."
     CheckRows(inputCSV,tempFile)
 
+    puts "getting valid stations ..."
     validStationsArr = GetValidStations(tempFile, numOfDays)
 
+    puts "generating #{outputCSV} file ..."
     GenerateOutputFile(tempFile, outputCSV, validStationsArr)
 
+    puts "deleting temp files ..."
     File.delete(tempFile)
 
+    puts "Done!"
   end
 
 
