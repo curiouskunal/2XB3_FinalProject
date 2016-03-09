@@ -4,7 +4,7 @@ require_relative 'weather.rb'
 # -format of inputCSV:
 #                STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 def main
-  inputCSV = 'data/Testing.csv'
+  inputCSV = 'data/testingFinal.csv'
 
   fullList = Array.new
   temp = Array.new
@@ -14,7 +14,7 @@ def main
   currentStation = Station.new "0", "0", "0", "0", "0"
 
   CSV.foreach(inputCSV, headers:true) do |row|
-    puts row
+    # puts row
     tmp = row[0].to_s
     if currentStation.code != tmp
       fullList.push(currentStation)
@@ -23,14 +23,14 @@ def main
     currentStation.add_weather (Weather.new row[5], row[6], row[8], row[9])
   end
 
-  for i in 0..fullList.size
+  for i in 0..fullList.size-1
     temp[i], rain[i] = getWearther fullList[i]
-    puts temp[i].to_s + " and " + rain[i].to_s
+    # puts temp[i].to_s + " and " + rain[i].to_s
   end
 
   sort temp
   sort rain
-  puts ""
+  # puts ""
   puts temp
   puts ""
   puts rain
