@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require '../station.rb'
+require '../weather.rb'
 
 class StationTest < Minitest::Test
   def test_constructor
@@ -11,6 +12,28 @@ class StationTest < Minitest::Test
     assert_equal 'GHCND:USR0000CTHO', station.code
     assert_equal 'THOMES CREEK CALIFORNIA CA US',
                  station.name
+    assert_equal 0, station.connections
+
+    station.inc_connections
+
+    assert_equal 1, station.connections
+
+    station.dec_connections
+
+    assert_equal 0, station.connections
+
+    weather = [
+        Weather.new('20140101', '0', '0', '0'),
+        Weather.new('20140101', '0', '0', '0'),
+        Weather.new('20140101', '0', '0', '0')
+    ]
+
+    assert_equal [], station.weather
+    for w in weather
+      station.add_weather w
+    end
+    assert_equal weather, station.weather
+
   end
 end
 

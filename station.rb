@@ -5,6 +5,7 @@ class Station
     @code = code.to_s
     @name = name.to_s
     @number_of_connections = 0
+    @weather = []
   end
 
   def location
@@ -34,6 +35,15 @@ class Station
   def connections
     @number_of_connections
   end
+
+  def add_weather day
+    @weather.push day
+  end
+
+  def weather
+    @weather
+  end
+
 end
 
 class Location

@@ -9,5 +9,10 @@ class WeatherTest < Minitest::Test
     assert_equal (8.3..21.7), weather.temp
     assert_equal 21.7, weather.t_max
     assert_equal 8.3, weather.t_min
+
+    assert_equal weather,  (Weather.new '20140101', '10', '217', '83')
+    refute_equal weather,  (Weather.new '20140101', '9', '217', '83')
+
+
   end
 end
