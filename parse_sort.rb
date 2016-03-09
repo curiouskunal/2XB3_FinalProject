@@ -14,6 +14,7 @@ def main
   currentStation = Station.new "0", "0", "0", "0", "0"
 
   CSV.foreach(inputCSV, headers:true) do |row|
+    puts row
     tmp = row[0].to_s
     if currentStation.code != tmp
       fullList.push(currentStation)
@@ -23,12 +24,13 @@ def main
   end
 
   for i in 0..fullList.size
-    temp[i], rain[i] = 
+    temp[i], rain[i] = getWearther fullList[i]
+    puts temp[i].to_s + " and " + rain[i].to_s
   end
 
   sort temp
   sort rain
-
+  puts ""
   puts temp
   puts ""
   puts rain
@@ -68,8 +70,9 @@ def heapify x, i, n
   end
 end
 
-def getWearther value
-  return value[6], [8]
+def getWearther station
+  puts station.class
+  return rand(),rand()
 end
 
 main
