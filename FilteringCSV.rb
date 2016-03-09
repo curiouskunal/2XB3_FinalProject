@@ -16,7 +16,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
 =end
 
-  def parseCSVdata(inputCSV, outputCSV, numOfDays)
+  def filterCSVdata(inputCSV, outputCSV, numOfDays)
 
     # set constants
     #numOfDays = 730 # 2 years
@@ -155,4 +155,9 @@ end
 # --- MAIN ---
 
 x = FilteringCSV.new
-x.parseCSVdata('data/Testing.csv','data/caliFinal.csv',30)
+
+# Run filter on Testing.csv
+x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv', 30)
+
+# Run filter on Full dataset
+# x.parseCSVdata('data/california.csv','data/caliFinal.csv',730)
