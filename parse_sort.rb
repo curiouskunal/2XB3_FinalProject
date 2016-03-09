@@ -71,7 +71,6 @@ def heapify x, i, n
 end
 
 def getWearther station
-  puts station.class
   return rand(),rand()
 end
 
