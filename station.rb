@@ -1,4 +1,6 @@
 class Station
+
+
   def initialize code, name, elev, lat, lon
     @location = Location.new lat.to_f, lon.to_f
     @elevation = elev.to_i
@@ -44,6 +46,35 @@ class Station
     @weather
   end
 
+  def to_s
+    s = "{\n" +
+        "\tID: #{@code.to_s},\n" +
+        "\tName: #{@name.to_s},\n" +
+        "\tElevation: #{@elevation.to_s},\n" +
+        "\tLocation: #{@location.to_s},\n" +
+        "\tNumber of Connections: #{@number_of_connections},\n" +
+        "\tDays: " #{@weather}\n" +
+        #"}"
+
+    l = @weather.size
+    if l > 0
+      ws = "[\n"
+      @weather.each_with_index { |w, i|
+        ws << "\t\t#{w.to_s}"
+        if i < (l - 1)
+          ws << ","
+        end
+        ws << "\n"
+      }
+      ws << "\t]\n"
+    else
+      ws = "[]\n"
+    end
+
+    s << ws + "}"
+    s
+  end
+
 end
 
 class Location
@@ -57,6 +88,20 @@ class Location
 
   def == other
     self.class == other.class && self.state == other.state
+  end
+
+  def to_s
+    if @latitude >= 0
+      latitude = @latitude.to_s + " N"
+    else
+      latitude = @latitude.abs.to_s + " S"
+    end
+    if @longitude >= 0
+      longitude = @longitude.to_s + " E"
+    else
+      longitude = @longitude.abs.to_s + " W"
+    end
+    "( " + latitude + ", " + longitude + " )"
   end
 
   def state

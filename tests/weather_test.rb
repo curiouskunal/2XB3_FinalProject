@@ -13,6 +13,8 @@ class WeatherTest < Minitest::Test
     assert_equal weather,  (Weather.new '20140101', '10', '217', '83')
     refute_equal weather,  (Weather.new '20140101', '9', '217', '83')
 
+    assert_equal "[ Date: 2014-01-01, Precipitation: 10,  Temperature: 8.3..21.7 ]",
+        weather.to_s
 
   end
 end

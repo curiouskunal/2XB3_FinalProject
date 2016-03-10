@@ -28,6 +28,10 @@ class Weather
     @precipitation
   end
 
+  def to_s
+    "[ Date: " + @date.to_s + ", Precipitation: " + @precipitation.to_s + ",  Temperature: " + @temp.to_s + " ]"
+  end
+
   def == other
     self.class == other.class && self.state == other.state
   end
