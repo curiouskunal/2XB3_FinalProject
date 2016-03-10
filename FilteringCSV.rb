@@ -22,6 +22,9 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     #numOfDays = 730 # 2 years
     tempFile = 'data/tempCSV.csv'
 
+
+    File.delete(outputCSV)
+
     puts "started filtering #{inputCSV} ..."
     CheckRows(inputCSV,tempFile)
 
@@ -43,22 +46,10 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
   def isPrintLine(row)
     # loops through all values in row to check if data is missing.
     # missing data is indicated by "-9999"
-    for i in 0..6
+    for i in 0..8
       if -9999 == row[i].to_i
-        # print " bad "
+        # found bad row
         return false
-      else
-        # print "good "
-        # saveLine will remain true.
-      end
-    end
-    for i in 8..9
-      if -9999 == row[i].to_i
-        # print " bad "
-        return false
-      else
-        # print "good "
-        # saveLine will remain true.
       end
     end
     return true
@@ -157,7 +148,7 @@ end
 x = FilteringCSV.new
 
 # Run filter on Testing.csv
-x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv',30)
+# x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv',30)
 
 # Run filter on Full dataset
-# x.parseCSVdata('data/california.csv','data/caliFinal.csv',730)
+x.filterCSVdata('data/california.csv','data/caliFinal.csv',730)
