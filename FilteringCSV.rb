@@ -157,7 +157,7 @@ end
 x = FilteringCSV.new
 
 # Run filter on Testing.csv
-x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv', 30)
+x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv',30)
 
 # Run filter on Full dataset
 # x.parseCSVdata('data/california.csv','data/caliFinal.csv',730)
