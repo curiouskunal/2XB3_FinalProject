@@ -22,8 +22,9 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     #numOfDays = 730 # 2 years
     tempFile = 'data/tempCSV.csv'
 
-
-    File.delete(outputCSV)
+    if File.exist?(outputCSV)
+      File.delete(outputCSV)
+    end
 
     puts "started filtering #{inputCSV} ..."
     CheckRows(inputCSV,tempFile)
@@ -146,9 +147,9 @@ end
 # --- MAIN ---
 
 x = FilteringCSV.new
-
-# Run filter on Testing.csv
+#
+# # Run filter on Testing.csv
 # x.filterCSVdata('data/Testing.csv', 'data/testingFinal.csv',30)
-
-# Run filter on Full dataset
+#
+# # Run filter on Full dataset
 x.filterCSVdata('data/california.csv','data/caliFinal.csv',730)
