@@ -74,4 +74,7 @@ def getWearther station
   return rand(),rand()
 end
 
-main
+#--------------------------#
+# Removed autoRunning Code #
+#--------------------------#
+#main

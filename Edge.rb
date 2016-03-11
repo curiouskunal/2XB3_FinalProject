@@ -1,11 +1,16 @@
-require 'station'
-
+require './station'
+#Edge takes in two stations and tolerance and will calculate
+#the percent days in tolerance for rain and temperature aswell
+#as calculate the length of the edge
 class Edge
+
   def initialize(node1, node2, tolerance)
     @s1=node1
     @s2=node2
+    #pre-calculate all values
     @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
     @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
+    @length = distance()
   end
 
   def PercenTemptDays(val1,val2,tolerance)
@@ -15,6 +20,7 @@ class Edge
         tmpVals=tmpVals+1
       end
     end
+    return tmpVals/val1.length
   end
 
   def PercentRainDays(val1,val2,tolerance)

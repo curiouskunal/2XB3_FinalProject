@@ -23,7 +23,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     tempFile = 'data/tempCSV.csv'
 
 
-    File.delete(outputCSV)
+  # File.delete(outputCSV)
 
     puts "started filtering #{inputCSV} ..."
     CheckRows(inputCSV,tempFile)
@@ -141,8 +141,10 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
 end
 
-
-
+#--------------------------#
+# Removed autoRunning Code #
+#--------------------------#
+=begin
 # --- MAIN ---
 
 x = FilteringCSV.new
@@ -152,3 +154,4 @@ x = FilteringCSV.new
 
 # Run filter on Full dataset
 x.filterCSVdata('data/california.csv','data/caliFinal.csv',730)
+=end
