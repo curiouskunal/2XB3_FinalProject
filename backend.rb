@@ -36,9 +36,9 @@ class BackEnd
     #delte original to free up memorey
     #1 degree grid size
     @searchGrid = Array.new(northLat-southLat) {Array.new(eastLong-westLong) {Array.new}}
-    puts @fullStationList.length-1
-    for i in 0..(@fullStationList.length-1)
-      tmp = @fullStationList[i]
+    numStations = @fullStationList.length-1
+    for i in 0..numStations
+      tmp=@fullStationList.pop();
       @searchGrid[(tmp.location.latitude-southLat).floor][(tmp.location.longitude-westLong).floor].push(tmp)
     end
   end
@@ -59,7 +59,6 @@ class BackEnd
         end
       end
     end
-
     puts 'hi'
   end
 end
