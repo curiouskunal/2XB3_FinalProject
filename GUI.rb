@@ -1,6 +1,6 @@
 # author: Kunal Shah
 # version: 2.0
-Shoes.app :title => "Filter CSV" do
+Shoes.app :title => "Filter CSV", width: 400 do
 
   class Actions
     @myApp
@@ -134,7 +134,6 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     # Method to append all valid station's data points to final filtered output file
     def GenerateOutputFile(inputCSV, outputCSV, validStations)
 
-
       printHeaders = false
 
       CSV.foreach(inputCSV) do |row|
@@ -144,38 +143,37 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
           printHeaders = true
         end
 
-# if StationID is in validStations list then add row to output file
+        # if StationID is in validStations list then add row to output file
         if validStations.include?(row[0])
           open(outputCSV, 'a') { |f| f.puts row.join(",")}
         end
 
       end
 
-
     end
 
   end
 
 
+  #### GUI ####
+
+
   @myFilter = Actions.new(self)
-  @list1 = ["test1","test2","test3"]
-  @list2 = ["test1","test2","test3"]
+  @goodList = ["test1","test2","test3"]
+  @badList = ["test1","test2","test3","test1","test2","test3","test1","test2","test3"]
 
   stack do
-    style(:margin_left => '10%', :margin_top => '10%')
+    style(:margin_left => '22%', :margin_top => '5%')
     # inText = edit_line
     # outText = edit_line
 
-    para "input file"
+    para "Input file"
     inText = list_box items: ["Testing" , "california"]
-    para "output file name"
+    para "Output file name"
     outText = edit_line
 
-    para "number of days"
+    para "Number of days"
     daysText = edit_line
-
-
-
 
     button "run the program" do
       # Run filter on Testing.csv
@@ -188,15 +186,24 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
       alert "done! file saved to: #{output}"
 
+
+      flow do
+        stack width: 200 do
+          style(:margin_left => '5%', :margin_right => '5%')
+          background white
+          caption "Good Statiosn"
+          para @goodList.join("\n"), stroke: green
+        end
+        stack width: -200 do
+          style(:margin_left => '5%', :margin_right => '5%')
+          background white
+          caption "Bad Stations"
+          para @badList.join("\n"), stroke: red
+
+        end
+      end
+
     end
   end
-
-  stack do
-    style(:margin_left => '10%', :margin_top => '10%')
-    flow do
-
-  end
-
-  end
-  end
+end
 
