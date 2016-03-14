@@ -31,25 +31,34 @@ class BackEnd
   end
 
   def self.createGrid
-    topLeftLong, topLeftLat = -125, 42
-    bottomRightLong, bottomRightLat = -114, 32
+    westLong, northLat = -125, 42
+   eastLong, southLat = -114, 32
     #delte original to free up memorey
     #1 degree grid size
-    @searchGrid = Array.new(topLeftLat,bottomRightLat) {Array.new(bottomRightLong-topLeftLong) {Array.new}}
+    @searchGrid = Array.new(northLat-southLat) {Array.new(eastLong-westLong) {Array.new}}
+    puts @fullStationList.length-1
     for i in 0..(@fullStationList.length-1)
       tmp = @fullStationList[i]
-      @searchGrid[(tmp.location.latitude-bottomRightLat).floor][(tmp.location.longitude-topLeftLong).floor].push('hi')
+      @searchGrid[(tmp.location.latitude-southLat).floor][(tmp.location.longitude-westLong).floor].push(tmp)
     end
   end
 
   def self.run
     dataFile = 'Test.csv'
-
+=begin
     x = FilteringCSV.new
     x.filterCSVdata('data/california.csv','data/'+dataFile,730)
-
+=end
     parse (dataFile)
     createGrid()
+    for y in 0..(@searchGrid.length-1)
+      puts y.to_s+" = "
+      for x in 0..(@searchGrid[0].length-1)
+        for i in 0..(@searchGrid[y][x].length-1)
+          puts "    "+@searchGrid[y][x][i].code
+        end
+      end
+    end
 
     puts 'hi'
   end
