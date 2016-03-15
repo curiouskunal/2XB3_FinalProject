@@ -161,7 +161,8 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
   @myFilter = Actions.new(self)
   @goodList = []
-  @badList = ["test1","test2","test3","test1","test2","test3","test1","test2","test3"]
+  @badList = ["GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+              "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010"]
 
   stack do
     style(:margin_left => '32%', :margin_top => '5%')
