@@ -1,6 +1,6 @@
 # author: Kunal Shah
 # version: 2.0
-Shoes.app :title => "Filter CSV", width: 400 do
+Shoes.app :title => "Filter CSV", width: 600 do
 
   class Actions
     @myApp
@@ -45,6 +45,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
       # puts "deleting temp files ..."
       File.delete(tempFile)
 
+      return validStationsArr
       # puts "Done!"
     end
 
@@ -159,7 +160,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
 
   @myFilter = Actions.new(self)
-  @goodList = ["test1","test2","test3"]
+  @goodList = []
   @badList = ["test1","test2","test3","test1","test2","test3","test1","test2","test3"]
 
   stack do
@@ -182,19 +183,19 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
       output = "data/"+outText.text.to_s+".csv"
       days = daysText.text.to_s.to_i(10)
 
-      @myFilter.doFilter(input,output,days)
+      @goodList = @myFilter.doFilter(input,output,days)
 
       alert "done! file saved to: #{output}"
 
 
       flow do
-        stack width: 200 do
+        stack width: 300 do
           style(:margin_left => '5%', :margin_right => '5%')
           background white
-          caption "Good Statiosn"
+          caption "Good Stations"
           para @goodList.join("\n"), stroke: green
         end
-        stack width: -200 do
+        stack width: -300 do
           style(:margin_left => '5%', :margin_right => '5%')
           background white
           caption "Bad Stations"
@@ -202,7 +203,6 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
         end
       end
-
     end
   end
 end
