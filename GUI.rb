@@ -164,7 +164,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
   @badList = ["test1","test2","test3","test1","test2","test3","test1","test2","test3"]
 
   stack do
-    style(:margin_left => '22%', :margin_top => '5%')
+    style(:margin_left => '32%', :margin_top => '5%')
     # inText = edit_line
     # outText = edit_line
 
