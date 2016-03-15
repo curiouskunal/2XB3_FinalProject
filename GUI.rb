@@ -161,8 +161,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
   @myFilter = Actions.new(self)
   @goodList = []
-  @badList = ["GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
-              "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010"]
+  @badList = ["GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002","GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010"]
 
   stack do
     style(:margin_left => '32%', :margin_top => '5%')
@@ -171,22 +170,29 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
     para "Input file"
     inText = list_box items: ["Testing" , "california"]
-    para "Output file name"
-    outText = edit_line
+    para "Temp Tolerance"
+    tempText = edit_line
 
-    para "Number of days"
-    daysText = edit_line
+    para "Precipitation Tolerance"
+    rainText = edit_line
 
     button "run the program" do
       # Run filter on Testing.csv
 
       input = "data/"+inText.text.to_s+".csv"
-      output = "data/"+outText.text.to_s+".csv"
-      days = daysText.text.to_s.to_i(10)
+      temp = tempText.text.to_s.to_i(10)
+      rain = rainText.text.to_s.to_i(10)
 
-      @goodList = @myFilter.doFilter(input,output,days)
+      days = 0
+      if inText == "Testing"
+        days = 30
+      else
+        days = 730
+      end
 
-      alert "done! file saved to: #{output}"
+      @goodList = @myFilter.doFilter(input,"data/CSVout.csv",30)
+
+      alert "done! with Temp Tolerance: #{temp} and Precipitation Tolerance #{rain}"
 
 
       flow do
