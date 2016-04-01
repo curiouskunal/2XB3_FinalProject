@@ -3,12 +3,15 @@ require './FilteringCSV'
 require './parse_sort'
 require './station'
 require './weather'
+require './minPQEdges'
+require 'set'
 class BackEnd
   @searchGrid
   @visited = Set.new
   @graphNodes = Set.new
   @graphEdges = Set.new
-  @possibleEdges = MinPQ.new
+  @possibleEdges = MinPQEdges.new
+  @fullStationList = Array.new
 
 
   #extracted from pareek's code
@@ -36,7 +39,7 @@ class BackEnd
 
   def self.createGrid
     westLong, northLat = -125, 42
-   eastLong, southLat = -114, 32
+    eastLong, southLat = -114, 32
     #delte original to free up memorey
     #1 degree grid size
     @searchGrid = Array.new(northLat-southLat) {Array.new(eastLong-westLong) {Array.new}}
@@ -85,19 +88,19 @@ class BackEnd
     adj = Set.new
     xs = [x-1, x, x+1]
     ys = [y-1, y, y+1]
-    xs.each do _x
-    if (_x >= 0) and (_x < @searchGrid.length)
-      ys.each do _y
-      if (_y >= 0) and (_y < @searchGrid[0].length)
-        @searchGrid[_x][_y].each do n
-        adj.add n
+    xs.each do |_x|
+      if (_x >= 0) and (_x < @searchGrid.length)
+        ys.each do |_y|
+          if (_y >= 0) and (_y < @searchGrid[0].length)
+            @searchGrid[_x][_y].each do |n|
+              adj.add n
+            end
+          end
         end
       end
-      end
-    end
     end
 
-    adj.each do n
+    adj.each do |n|
       unless (not node == n) and ((distance node, n ) <  100000)
         adj.delete n
       end
@@ -106,12 +109,9 @@ class BackEnd
 
   def self.run
     dataFile = 'Test.csv'
-=begin
-    x = FilteringCSV.new
-    x.filterCSVdata('data/california.csv','data/'+dataFile,730)
-=end
     parse (dataFile)
     createGrid()
+
     for y in 0..(@searchGrid.length-1)
       puts y.to_s+" = "
       for x in 0..(@searchGrid[0].length-1)
@@ -120,6 +120,7 @@ class BackEnd
         end
       end
     end
+    graph()
     puts 'hi'
   end
 end
