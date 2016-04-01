@@ -105,6 +105,7 @@ class BackEnd
         adj.delete n
       end
     end
+    adj
   end
 
   def self.run
