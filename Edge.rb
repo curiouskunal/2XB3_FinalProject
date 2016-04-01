@@ -44,7 +44,7 @@ class Edge
     return @tempDays, @rainDays
   end
 
-  def distanceCalc(s1, s2)
+  def self.distanceCalc(s1, s2)
     radiusEarth=6371000;
     x1 = @s1.location.longitude*(Math::PI/180.0)
     x2 = @s2.location.longitude*(Math::PI/180.0)
