@@ -3,6 +3,7 @@ require './FilteringCSV'
 require './parse_sort'
 require './station'
 require './weather'
+require './Edge'
 require './minPQEdges'
 require 'set'
 class BackEnd
@@ -22,7 +23,6 @@ class BackEnd
     roundOne=true;
 
     CSV.foreach(inputCSV, headers:true) do |row|
-      # puts row
       tmp = row[0].to_s
       if currentStation.code != tmp
         #so that the 0th element is not blank
@@ -40,7 +40,7 @@ class BackEnd
   def self.createGrid
     westLong, northLat = -125, 42
     eastLong, southLat = -114, 32
-    #delte original to free up memorey
+    #delete original to free up memory
     #1 degree grid size
     @searchGrid = Array.new(northLat-southLat) {Array.new(eastLong-westLong) {Array.new}}
     numStations = @fullStationList.length-1
@@ -101,7 +101,7 @@ class BackEnd
     end
 
     adj.each do |n|
-      unless (not node == n) and ((distance node, n ) <  100000)
+      unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000)
         adj.delete n
       end
     end
@@ -112,14 +112,14 @@ class BackEnd
     parse (dataFile)
     createGrid()
 
-    for y in 0..(@searchGrid.length-1)
-      puts y.to_s+" = "
-      for x in 0..(@searchGrid[0].length-1)
-        for i in 0..(@searchGrid[y][x].length-1)
-          puts "    "+@searchGrid[y][x][i].code
-        end
-      end
-    end
+    # for y in 0..(@searchGrid.length-1)
+    #   puts y.to_s+" = "
+    #   for x in 0..(@searchGrid[0].length-1)
+    #     for i in 0..(@searchGrid[y][x].length-1)
+    #       puts "    "+@searchGrid[y][x][i].code
+    #     end
+    #   end
+    # end
     graph()
     puts 'hi'
   end
