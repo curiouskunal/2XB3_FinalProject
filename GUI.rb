@@ -1,6 +1,6 @@
 # author: Kunal Shah
 # version: 2.0
-Shoes.app :title => "Filter CSV" do
+Shoes.app :title => "Filter CSV", width: 600 do
 
   class Actions
     @myApp
@@ -45,6 +45,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
       # puts "deleting temp files ..."
       File.delete(tempFile)
 
+      return validStationsArr
       # puts "Done!"
     end
 
@@ -134,7 +135,6 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
     # Method to append all valid station's data points to final filtered output file
     def GenerateOutputFile(inputCSV, outputCSV, validStations)
 
-
       printHeaders = false
 
       CSV.foreach(inputCSV) do |row|
@@ -144,59 +144,94 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
           printHeaders = true
         end
 
-# if StationID is in validStations list then add row to output file
+        # if StationID is in validStations list then add row to output file
         if validStations.include?(row[0])
           open(outputCSV, 'a') { |f| f.puts row.join(",")}
         end
 
       end
 
-
     end
 
   end
 
 
+  #### GUI ####
+
+
   @myFilter = Actions.new(self)
-  @list1 = ["test1","test2","test3"]
-  @list2 = ["test1","test2","test3"]
+  @goodList = []
+
 
   stack do
-    style(:margin_left => '10%', :margin_top => '10%')
+    style(:margin_left => '32%', :margin_top => '5%')
     # inText = edit_line
     # outText = edit_line
 
-    para "input file"
+    para "Input file"
     inText = list_box items: ["Testing" , "california"]
-    para "output file name"
-    outText = edit_line
+    para "Temp Tolerance"
+    tempText = edit_line
 
-    para "number of days"
-    daysText = edit_line
-
-
-
+    para "Precipitation Tolerance"
+    rainText = edit_line
 
     button "run the program" do
       # Run filter on Testing.csv
 
       input = "data/"+inText.text.to_s+".csv"
-      output = "data/"+outText.text.to_s+".csv"
-      days = daysText.text.to_s.to_i(10)
+      temp = tempText.text.to_s.to_i(10)
+      rain = rainText.text.to_s.to_i(10)
 
-      @myFilter.doFilter(input,output,days)
+      if inText.text.to_s == "Testing"
+        days = 30
+        @badList = ["GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002","GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010"]
+      else
+        days = 730
+        @badList = ["GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010""GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010""GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010","GHCND:US1CAMT0008","GHCND:US1CAIN0006","GHCND:US1CAIN0005","GHCND:US1CAIN0002",
+                    "GHCND:USC00041159","GHCND:USC00046602","GHCND:US1CASH0010"]
+      end
 
-      alert "done! file saved to: #{output}"
+      @goodList = @myFilter.doFilter(input,"data/CSVout.csv",days)
 
+      alert "done! with Temp Tolerance: #{temp} and Precipitation Tolerance #{rain}"
+
+
+      flow do
+        stack width: 300 do
+          style(:margin_left => '5%', :margin_right => '5%')
+          background white
+          caption "Good Stations"
+          para @goodList.join("\n"), stroke: green
+        end
+        stack width: -300 do
+          style(:margin_left => '5%', :margin_right => '5%')
+          background white
+          caption "Bad Stations"
+          para @badList.join("\n"), stroke: red
+
+        end
+      end
     end
   end
-
-  stack do
-    style(:margin_left => '10%', :margin_top => '10%')
-    flow do
-
-  end
-
-  end
-  end
+end
 
