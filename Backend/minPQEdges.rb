@@ -10,18 +10,19 @@ class MinPQEdges
   end
 
   def push(e)
-    if (e.is_a?(Edge))
-      @size+=1
-      @que[@size]=e
-      swim(@size)
-    else
-      e.each do |tmp|
+    if (!(e==nil))
+      if (e.is_a?(Edge))
         @size+=1
-        @que[@size]=tmp
+        @que[@size]=e
         swim(@size)
+      else
+        e.each do |tmp|
+          @size+=1
+          @que[@size]=tmp
+          swim(@size)
+        end
       end
     end
-
   end
 
   def put()

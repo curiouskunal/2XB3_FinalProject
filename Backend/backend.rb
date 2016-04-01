@@ -1,4 +1,3 @@
-require './Edge'
 require './FilteringCSV'
 require './parse_sort'
 require './station'
@@ -65,7 +64,7 @@ class BackEnd
       end
     else
       curr = node
-      @possibleEdges.push (self.adjacent curr, x, y)
+      @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
       @visited.add curr
       until @possibleEdges.empty?
         edge = @possibleEdges.pop
@@ -86,7 +85,7 @@ class BackEnd
 
   def self.makeEdges curr, nodes
     edges = Set.new
-    nodes.each do node
+    nodes.each do |node|
       edges.add (Edge.new curr, node, 0)
     end
     edges
@@ -117,7 +116,7 @@ class BackEnd
   end
 
   def self.run
-    dataFile = 'Test.csv'
+    dataFile = 'test3.csv'
     parse (dataFile)
     createGrid()
 
