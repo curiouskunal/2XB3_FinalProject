@@ -9,9 +9,9 @@ class Edge
     @s1=node1
     @s2=node2
     #pre-calculate all values
-    #@tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
-    #@rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
-    #@length = distanceCalc(@s1,@s2)
+    @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
+    @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
+    @length = distanceCalc(@s1,@s2)
   end
 
   def PercenTemptDays(val1, val2, tolerance)
@@ -94,8 +94,7 @@ class Edge
   end
 
   def cross(vals1)
-    if (vals1.is_a?(Set))
-      puts "sup"
+    if (vals1==Set.new())
       return false
     end
     if vals1.is_a?(Edge)
@@ -147,6 +146,7 @@ class Edge
   end
 end
 
+=begin
 tmp = Edge.new(Station.new(1, 1, 1, 0, 0), Station.new(1, 1, 1, 10, 10), 0)
 tmp2 = Edge.new(Station.new(1, 1, 1, 10, 0), Station.new(1, 1, 1, 0, 0), 0)
 tmp3 = Edge.new(Station.new(1, 1, 1, 5, 0), Station.new(1, 1, 1, 0, 0), 0)
@@ -155,4 +155,4 @@ hi.add(tmp2)
 hi.add(tmp3)
 print tmp.cross(Set.new())
 print tmp.cross(hi)
-puts "over"
+puts "over"=end
