@@ -1,4 +1,3 @@
-require './Edge'
 class MinPQEdges
 
   def initialize ()
