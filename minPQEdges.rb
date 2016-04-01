@@ -74,6 +74,4 @@ class MinPQEdges
     #if ((@size > 1) && (@size == (@que.length-1)/4))
     return min;
   end
-
-
 end
