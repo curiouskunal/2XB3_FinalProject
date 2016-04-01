@@ -10,7 +10,7 @@ class Edge
     #pre-calculate all values
     @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
     @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
-    @length = distance()
+    @length = distanceCalc()
   end
 
   def PercenTemptDays(val1,val2,tolerance)
@@ -44,7 +44,7 @@ class Edge
     return @tempDays, @rainDays
   end
 
-  def distance()
+  def distanceCalc()
     radiusEarth=6371000;
     x1 = @s1.location.longitude*(Math::PI/180.0)
     x2 = @s2.location.longitude*(Math::PI/180.0)
@@ -56,5 +56,13 @@ class Edge
     circumfrence = 2 * Math.atan2(Math.sqrt(a),Math.sqrt(1.0-a))
 
     return radiusEarth * circumfrence
+  end
+
+  def distance()
+    return @length
+  end
+
+  def >= (other)
+    return @length>=other.distance()
   end
 end
