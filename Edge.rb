@@ -40,16 +40,25 @@ class Edge
     return (val2-val1)<=tolerance
   end
 
+  def getNodes()
+    return @s1, @s2
+  end
+
+  def cross()
+    
+    return true;
+  end
+
   def getWeather()
     return @tempDays, @rainDays
   end
 
   def self.distanceCalc(s1, s2)
     radiusEarth=6371000;
-    x1 = @s1.location.longitude*(Math::PI/180.0)
-    x2 = @s2.location.longitude*(Math::PI/180.0)
-    y1 = @s1.location.latitude*(Math::PI/180.0)
-    y2 = @s2.location.latitude*(Math::PI/180.0)
+    x1 = s1.location.longitude*(Math::PI/180.0)
+    x2 = s2.location.longitude*(Math::PI/180.0)
+    y1 = s1.location.latitude*(Math::PI/180.0)
+    y2 = s2.location.latitude*(Math::PI/180.0)
     deltaX = x1-x2
     deltaY=y1-y2
     a = Math.sin(deltaX/2.0) * Math.sin(deltaX/2.0) + Math.cos(x1) * Math.cos(x2) * Math.sin(deltaY/2.0)* Math.sin(deltaY/2.0)

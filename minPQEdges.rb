@@ -5,7 +5,7 @@ class MinPQEdges
     Integer @size = 0#items in que
   end
 
-  def isEmpty()
+  def empty?()
     return @size == 0
   end
 
@@ -56,14 +56,14 @@ class MinPQEdges
   end
 
   def min()
-    if (isEmpty())
+    if (empty?())
       print "Error: underflow"
     end
     return  @que[1]
   end
 
   def pop()
-    if (isEmpty())
+    if (empty?())
       print "Error: underflow"
     end
     exch(1,@size)
