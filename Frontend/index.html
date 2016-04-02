@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Hello 2XB3!</title>
+    <meta charset="UTF-8">
+    <title>Hello 2XB3!</title>
+    <script src="./React/react.js"></script>
+    <script src="./React/react-dom.js"></script>
+
 </head>
 <body>
-	<h1>Hello 2XB3!</h1>
-	We are using node <script>document.write(process.versions.node)</script>,
-	Chrome <script>document.write(process.versions.chrome)</script>,
-	and Electron <script>document.write(process.versions.electron)</script>.
 
+
+<table width="110%" style="margin: -10px">
+    <tr height="720px">
+        <td width ="29.5%" style="background-color: #7BDCEF; vertical-align: top">
+            <div>
+            <h1>Hello 2XB3!</h1>
+            We are using node
+            <script>document.write(process.versions.node)</script>
+            ,
+            Chrome
+            <script>document.write(process.versions.chrome)</script>
+            ,
+            and Electron
+            <script>document.write(process.versions.electron)</script>
+            .
+            </div>
+
+            <div id="hi"></div>
+            <script type="text/babel">
+                ReactDOM.render(
+                < h1 > Hello, world! < / h1 >,
+                        document.getElementById('hi')
+                );
+            </script>
+
+        </td>
+        <td style="background-color: #1a75ff; vertical-align: top">
+            <h1>OUTPUT</h1>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

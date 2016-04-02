@@ -12,8 +12,8 @@ app.on('window-all-closed', function () {
 
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
-		width: 1600,
-		height: 1000
+		width: 1280,
+		height: 720
 	});
 
 	mainWindow.loadURL('file://' + __dirname + '/index.html');

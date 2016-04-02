@@ -93,7 +93,7 @@ class BackEnd
         ys.each do |_y|
           if (_y >= 0) and (_y < @searchGrid[0].length)
             @searchGrid[_x][_y].each do |n|
-              adj.add n
+              adj.add Edge.new(curr,n,1)
             end
           end
         end
