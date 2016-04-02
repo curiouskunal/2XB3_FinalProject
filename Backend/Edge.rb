@@ -146,13 +146,14 @@ class Edge
   end
 end
 
-=begin
-tmp = Edge.new(Station.new(1, 1, 1, 0, 0), Station.new(1, 1, 1, 10, 10), 0)
-tmp2 = Edge.new(Station.new(1, 1, 1, 10, 0), Station.new(1, 1, 1, 0, 0), 0)
-tmp3 = Edge.new(Station.new(1, 1, 1, 5, 0), Station.new(1, 1, 1, 0, 0), 0)
-hi = Set.new()
-hi.add(tmp2)
-hi.add(tmp3)
-print tmp.cross(Set.new())
-print tmp.cross(hi)
-puts "over"=end
+
+# tmp = Edge.new(Station.new(1, 1, 1, 0, 0), Station.new(1, 1, 1, 10, 10), 0)
+# tmp2 = Edge.new(Station.new(1, 1, 1, 10, 0), Station.new(1, 1, 1, 0, 0), 0)
+# tmp3 = Edge.new(Station.new(1, 1, 1, 5, 0), Station.new(1, 1, 1, 0, 0), 0)
+# hi = Set.new()
+# hi.add(tmp2)
+# hi.add(tmp3)
+# print tmp.cross(Set.new())
+# print tmp.cross(hi)
+# puts "over"
+

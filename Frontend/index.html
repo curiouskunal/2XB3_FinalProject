@@ -1,44 +1,144 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Hello 2XB3!</title>
-    <script src="./React/react.js"></script>
-    <script src="./React/react-dom.js"></script>
+    <title>Weather Station Analyzer</title>
 
+    <!-- map Visualizer-->
+   <script>window.$ = window.d3 = require("./d3/d3.min.js"); </script>
+    <script src="./d3/d3.min.js"> </script>
+
+<script src="main.js"> </script>
+
+    <!--Stylr Sheet-->
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>
+<body class="">
 
 
-<table width="110%" style="margin: -10px">
-    <tr height="720px">
-        <td width ="29.5%" style="background-color: #7BDCEF; vertical-align: top">
-            <div>
-            <h1>Hello 2XB3!</h1>
-            We are using node
-            <script>document.write(process.versions.node)</script>
-            ,
-            Chrome
-            <script>document.write(process.versions.chrome)</script>
-            ,
-            and Electron
-            <script>document.write(process.versions.electron)</script>
-            .
-            </div>
+<table height="101%" width="101.7%" style="margin: -10px;">
+   <tr>
 
-            <div id="hi"></div>
-            <script type="text/babel">
-                ReactDOM.render(
-                < h1 > Hello, world! < / h1 >,
-                        document.getElementById('hi')
-                );
-            </script>
+        <td width="29.5%" class="bg1" style="vertical-align: top;text-align: center;">
 
+            <h1>Sample Period</h1>
+            <table style="display: inline-block">
+                <tr>
+                    <td>
+                        Start Year
+                        <br>
+                        <select id="start_year">
+                            <option value=1986>1986</option>
+                            <option value=1987>1987</option>
+                            <option value=1988>1988</option>
+                            <option value=1989>1989</option>
+                            <option value=1990>1990</option>
+                            <option value=1991>1991</option>
+                            <option value=1992>1992</option>
+                            <option value=1993>1993</option>
+                            <option value=1994>1994</option>
+                            <option value=1995>1995</option>
+                            <option value=1996>1996</option>
+                            <option value=1997>1997</option>
+                            <option value=1998>1998</option>
+                            <option value=1999>1999</option>
+                            <option value=2000>2000</option>
+                            <option value=2001>2001</option>
+                            <option value=2002>2002</option>
+                            <option value=2003>2003</option>
+                            <option value=2004>2004</option>
+                            <option value=2005>2005</option>
+                            <option value=2006>2006</option>
+                            <option value=2007>2007</option>
+                            <option value=2008>2008</option>
+                            <option value=2009>2009</option>
+                            <option value=2010>2010</option>
+                            <option value=2011>2011</option>
+                            <option value=2012>2012</option>
+                            <option value=2013>2013</option>
+                            <option value=2014>2014</option>
+                            <option value=2015>2015</option>
+                        </select>
+                    </td>
+                    <td>
+                        Sample Period
+                        <br>
+                        <select id="period">
+                            <option value=1>1 Year</option>
+                            <option value=2>2 Years</option>
+                            <option value=3>3 Years</option>
+                            <option value=4>4 Years</option>
+                            <option value=5>5 Years</option>
+                            <option value=6>6 Years</option>
+                            <option value=7>7 Years</option>
+                            <option value=8>8 Years</option>
+                            <option value=9>9 Years</option>
+                            <option value=10>10 Years</option>
+                            <option value=11>11 Years</option>
+                            <option value=12>12 Years</option>
+                            <option value=13>13 Years</option>
+                            <option value=14>14 Years</option>
+                            <option value=15>15 Years</option>
+                            <option value=16>16 Years</option>
+                            <option value=17>17 Years</option>
+                            <option value=18>18 Years</option>
+                            <option value=19>19 Years</option>
+                            <option value=20>20 Years</option>
+                            <option value=21>21 Years</option>
+                            <option value=22>22 Years</option>
+                            <option value=23>23 Years</option>
+                            <option value=24>24 Years</option>
+                            <option value=25>25 Years</option>
+                            <option value=26>26 Years</option>
+                            <option value=27>27 Years</option>
+                            <option value=28>28 Years</option>
+                            <option value=29>29 Years</option>
+                            <option value=30>30 Years</option>
+                        </select>
+                    </td>
+
+                </tr>
+            </table>
+            <h1>Tolerences</h1>
+            <table style="display: inline-block">
+                <tr>
+                    <td>
+                        Temp
+                        <br>
+                        <input id="temp"type="number" min="0" placeholder="+/- X Degrees">
+                    </td>
+                    <td>
+                        Percip
+                        <br>
+                        <input id="percip"type="number" min="0" placeholder="+/- X millimeters">
+                    </td>
+
+                </tr>
+            </table>
+            <h1>Accuracy Rating</h1>
+            <input id="accuracy" type="number" min ="0" placeholder="Days">
+            <br>
+            <br>
+            <button onclick="test()">Submit Query</button>
         </td>
-        <td style="background-color: #1a75ff; vertical-align: top">
-            <h1>OUTPUT</h1>
+        <td class="bg2" style="vertical-align: top;text-align: center;">
+            <div style="height: 10px"></div>
+           <div style="vertical-align: middle;background-color: white">
+            <a style="color: green; font-size: larger;">GREEN = KEEP</a>
+            <a style="color: #0000FF; font-size: larger;">BLUE = CAN BE REMOVE</a>
+           </div>
+           <div style="height: 10px"></div>
+            <svg id="map">
+            </svg>
         </td>
     </tr>
+
 </table>
 </body>
+
+<script>
+drawMap();
+</script>
+
 </html>

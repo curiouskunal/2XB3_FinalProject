@@ -1,0 +1,7 @@
+Needed:
+- node 
+- npm install electron
+- npm install -g topojson
+
+toRun:
+-npm start
