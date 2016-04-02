@@ -9,8 +9,8 @@ class Edge
     @s1=node1
     @s2=node2
     #pre-calculate all values
-    # @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
-    # @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
+    @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
+    @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
     @length = distanceCalc(@s1,@s2)
   end
 
@@ -144,20 +144,20 @@ class Edge
       return false
     end
   end
-
+  
   def to_s
     @s1.location.latitude.to_s + "," + @s1.location.longitude.to_s + "," + @s2.location.latitude.to_s  + "," + @s2.location.longitude.to_s
   end
 end
 
-=begin
-tmp = Edge.new(Station.new(1, 1, 1, 0, 0), Station.new(1, 1, 1, 10, 10), 0)
-tmp2 = Edge.new(Station.new(1, 1, 1, 10, 0), Station.new(1, 1, 1, 0, 0), 0)
-tmp3 = Edge.new(Station.new(1, 1, 1, 5, 0), Station.new(1, 1, 1, 0, 0), 0)
-hi = Set.new()
-hi.add(tmp2)
-hi.add(tmp3)
-print tmp.cross(Set.new())
-print tmp.cross(hi)
-puts "over"
-=end
+
+# tmp = Edge.new(Station.new(1, 1, 1, 0, 0), Station.new(1, 1, 1, 10, 10), 0)
+# tmp2 = Edge.new(Station.new(1, 1, 1, 10, 0), Station.new(1, 1, 1, 0, 0), 0)
+# tmp3 = Edge.new(Station.new(1, 1, 1, 5, 0), Station.new(1, 1, 1, 0, 0), 0)
+# hi = Set.new()
+# hi.add(tmp2)
+# hi.add(tmp3)
+# print tmp.cross(Set.new())
+# print tmp.cross(hi)
+# puts "over"
+
