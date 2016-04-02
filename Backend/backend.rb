@@ -45,7 +45,9 @@ class BackEnd
     numStations = @fullStationList.length-1
     for i in 0..numStations
       tmp=@fullStationList.pop();
-      @searchGrid[(tmp.location.latitude-southLat).floor][(tmp.location.longitude-westLong).floor].push(tmp)
+      unless ((tmp.location.latitude-southLat).floor < 0) or ((tmp.location.latitude-southLat).floor >=@searchGrid.length) or ((tmp.location.longitude-westLong).floor < 0) or ((tmp.location.longitude-westLong).floor > @searchGrid[0].length)
+        @searchGrid[(tmp.location.latitude-southLat).floor][(tmp.location.longitude-westLong).floor].push(tmp)
+      end
     end
   end
 
@@ -67,6 +69,7 @@ class BackEnd
       @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
       @visited.add curr
       until @possibleEdges.empty?
+        puts @possibleEdges.class
         edge = @possibleEdges.pop
         unless edge.cross @graphEdges
           @graphEdges.add edge
@@ -100,13 +103,12 @@ class BackEnd
         ys.each do |_y|
           if (_y >= 0) and (_y < @searchGrid[0].length)
             @searchGrid[_x][_y].each do |n|
-              adj.add Edge.new(curr,n,1)
+              adj.add n
             end
           end
         end
       end
     end
-
     adj.each do |n|
       unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000)
         adj.delete n
@@ -129,6 +131,9 @@ class BackEnd
     #   end
     # end
     graph()
+    @graphEdges.each do |edge|
+      puts edge.to_s
+    end
     puts 'hi'
   end
 end
