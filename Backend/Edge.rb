@@ -41,7 +41,7 @@ class Edge
     return (val2-val1)<=tolerance
   end
 
-  def getNodes()
+  def nodes()
     return @s1, @s2
   end
 
@@ -98,16 +98,16 @@ class Edge
       return false
     end
     if vals1.is_a?(Edge)
-      tmp1, tmp2=vals1.getNodes()
+      tmp1, tmp2=vals1.nodes()
       return Edge.checkPoints(@s1, @s2, tmp1, tmp2)
     else
-      puts vals1
+      # puts vals1
       if (vals1.empty?)
         return false
       elsif (!vals1.empty?)
         doesCross=false
         vals1.each do |tmp|
-          tmp1, tmp2=tmp.getNodes()
+          tmp1, tmp2=tmp.nodes()
           if (!doesCross)
             doesCross = Edge.checkPoints(@s1, @s2, tmp1, tmp2)
           end
@@ -146,7 +146,7 @@ class Edge
   end
 
   def to_s
-    @s1.location.latitude + "," + @s1.location.longitute + "," + @s2.location.latitude  + "," + @s2.location.longitute
+    @s1.location.latitude.to_s + "," + @s1.location.longitude.to_s + "," + @s2.location.latitude.to_s  + "," + @s2.location.longitude.to_s
   end
 end
 

@@ -10,9 +10,15 @@ class MinPQEdges
   end
 
   def push(e)
-    @size+=1
-    @que[@size]=e
-    swim(@size)
+    if e.is_a? Edge
+      @size+=1
+      @que[@size]=e
+      swim(@size)
+    else
+      e.each do |i|
+        self.push i
+      end
+    end
   end
 
   def put()
@@ -67,7 +73,9 @@ class MinPQEdges
       print "Error: underflow"
     end
     exch(1,@size)
+    # puts @que.class
     min = @que[@size]
+    # puts min.class
     @size-=1
     sink(1)
     @que[@size+1]=nil

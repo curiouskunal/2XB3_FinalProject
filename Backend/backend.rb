@@ -45,7 +45,10 @@ class BackEnd
     numStations = @fullStationList.length-1
     for i in 0..numStations
       tmp=@fullStationList.pop();
-      unless ((tmp.location.latitude-southLat).floor < 0) or ((tmp.location.latitude-southLat).floor >=@searchGrid.length) or ((tmp.location.longitude-westLong).floor < 0) or ((tmp.location.longitude-westLong).floor > @searchGrid[0].length)
+      unless ((tmp.location.latitude-southLat).floor < 0) or
+          ((tmp.location.latitude-southLat).floor >=@searchGrid.length) or
+          ((tmp.location.longitude-westLong).floor < 0) or
+          ((tmp.location.longitude-westLong).floor > @searchGrid[0].length)
         @searchGrid[(tmp.location.latitude-southLat).floor][(tmp.location.longitude-westLong).floor].push(tmp)
       end
     end
@@ -67,12 +70,17 @@ class BackEnd
     else
       curr = node
       @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
+      # puts (self.adjacent curr, x, y).length
       @visited.add curr
+      # puts @possibleEdges.empty?
       until @possibleEdges.empty?
-        puts @possibleEdges.class
+        # puts @possibleEdges.class
         edge = @possibleEdges.pop
+        # puts edge.cross @graphEdges
         unless edge.cross @graphEdges
+          # puts "Adding edge"
           @graphEdges.add edge
+          puts edge.to_s
           a, b = edge.nodes
           curr = unless @graphNodes.include? b
                    b
@@ -80,6 +88,7 @@ class BackEnd
                    a
                  end
           @visited.add curr
+          puts @searchGrid[x][y]
           @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
         end
       end
@@ -109,6 +118,7 @@ class BackEnd
         end
       end
     end
+    # puts adj.length
     adj.each do |n|
       unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000)
         adj.delete n
@@ -123,18 +133,31 @@ class BackEnd
     createGrid()
 
     # for y in 0..(@searchGrid.length-1)
-    #   puts y.to_s+" = "
+    #   # puts y.to_s+" = "
     #   for x in 0..(@searchGrid[0].length-1)
-    #     for i in 0..(@searchGrid[y][x].length-1)
-    #       puts "    "+@searchGrid[y][x][i].code
-    #     end
+    #     # for i in 0..(@searchGrid[y][x].length-1)
+    #     #   puts "    "+@searchGrid[y][x][i].code
+    #     # end
+    #
     #   end
     # end
+    # count = 0
+    # @searchGrid.each_with_index do |row, x|
+    #   row.each_index do |y|
+    #     puts x.to_s + "," + y.to_s + ":" + @searchGrid[x][y].length.to_s
+    #     count += @searchGrid[x][y].length
+    #   end
+    # end
+    # puts "total: " + count.to_s
+    puts 'Finished Parsing'
     graph()
-    @graphEdges.each do |edge|
-      puts edge.to_s
+    puts 'Finished Graphing'
+    File.open 'edges.txt', 'w' do |file|
+      @graphEdges.each do |edge|
+        file.write edge.to_s
+      end
     end
-    puts 'hi'
+    puts 'done'
   end
 end
 
