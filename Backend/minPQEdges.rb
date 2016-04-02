@@ -1,8 +1,8 @@
 class MinPQEdges
 
   def initialize ()
-    Array @que = Array.new() #the que
-    Integer @size = 0 #items in que
+    Array @que = Array.new()  #the que
+    Integer @size = 0#items in que
   end
 
   def empty?()
@@ -10,22 +10,9 @@ class MinPQEdges
   end
 
   def push(e)
-    if (e.is_a?(Edge))
-      push2(e)
-    else
-      e.each do |tmp|
-        push2(tmp)
-      end
-    end
-  end
-
-  def push2(e)
-    if (e==nil)
-    else
-      @size+=1
-      @que[@size]=e
-      swim(@size)
-    end
+    @size+=1
+    @que[@size]=e
+    swim(@size)
   end
 
   def put()
@@ -33,8 +20,8 @@ class MinPQEdges
   end
 
   def swim(i)
-    while (i > 1 && greater(i/2, i))
-      exch(i, i/2)
+    while (i > 1 && greater(i/2,i))
+      exch(i,i/2)
       i = i/2;
     end
   end
@@ -42,18 +29,18 @@ class MinPQEdges
   def sink(i)
     while (2*i <= @size)
       j = 2*i
-      if (j<@size && greater(j, j+1))
+      if (j<@size && greater(j,j+1))
         j+=1
       end
-      if (!greater(i, j))
+      if (!greater(i,j))
         break
       end
-      exch(i, j)
+      exch(i,j)
       i =j
     end
   end
 
-  def greater(i, j)
+  def greater(i,j)
     # puts @que[i]>@que[j]  , @que[j] , @que[i]
     return @que[i]>=@que[j]
   end
@@ -62,7 +49,7 @@ class MinPQEdges
     return @size
   end
 
-  def exch(i, j)
+  def exch(i,j)
     swap =@que[i]
     @que[i] = @que[j]
     @que[j] = swap
@@ -72,14 +59,14 @@ class MinPQEdges
     if (empty?())
       print "Error: underflow"
     end
-    return @que[1]
+    return  @que[1]
   end
 
   def pop()
     if (empty?())
       print "Error: underflow"
     end
-    exch(1, @size)
+    exch(1,@size)
     min = @que[@size]
     @size-=1
     sink(1)
@@ -87,5 +74,4 @@ class MinPQEdges
     #if ((@size > 1) && (@size == (@que.length-1)/4))
     return min;
   end
-
 end
