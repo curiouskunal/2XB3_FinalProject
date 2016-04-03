@@ -1,7 +1,12 @@
-Needed:
+Needed - Electrical:
 - node 
 - npm install electron
 - npm install -g topojson
+- npm install geojson
+
+Needed - Server:
+- gem install sinatra
+- gem install json
 
 toRun:
 -npm start

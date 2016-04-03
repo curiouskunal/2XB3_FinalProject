@@ -2,3 +2,5 @@
 .DS_Store
 sqlite3.exe
 Frontend/node_modules
+Backend/California.db
+*.log
