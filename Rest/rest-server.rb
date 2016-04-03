@@ -11,9 +11,9 @@ set :environment, :production
 
 
 # Frontend sample input:
-# http://localhost:8080/say/{"start_year":1986,"period":1,"temp":0,"percip":0,"accuracy":0}
+# http://localhost:8080{"start_year":1986,"period":1,"temp":0,"percip":0,"accuracy":0}
 
-get '/:data' do
+get '/query/:data' do
 
 	:data.to_json  
 
@@ -42,4 +42,12 @@ get '/test/:data' do
 
  	return_message[:status] = "Running Filtering with #{jdata[:input].to_s} , #{jdata[:output].to_s} , #{jdata[:days].to_s}!" 
   	return_message.to_json  
+end
+
+get '/terminate' do
+	body "I'll be back..."
+	# maybe clean things up here...
+	logger.info "Received terminate request!"
+	Thread.new { sleep 1; Process.kill 'INT', Process.pid }
+	halt 200
 end
