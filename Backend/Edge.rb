@@ -9,8 +9,8 @@ class Edge
     @s1=node1
     @s2=node2
     #pre-calculate all values
-    @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
-    @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
+    # @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
+    # @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
     @length = distanceCalc(@s1,@s2)
   end
 
@@ -144,7 +144,7 @@ class Edge
       return false
     end
   end
-  
+
   def to_s
     @s1.location.latitude.to_s + "," + @s1.location.longitude.to_s + "," + @s2.location.latitude.to_s  + "," + @s2.location.longitude.to_s
   end

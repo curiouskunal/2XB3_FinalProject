@@ -82,14 +82,25 @@ class BackEnd
           @graphEdges.add edge
           puts edge.to_s
           a, b = edge.nodes
+          unless @graphNodes.include? a
+            @graphNodes.add a
+          end
+          unless @graphNodes.include? b
+            @graphNodes.add b
+          end
           curr = unless @graphNodes.include? b
                    b
                  else
                    a
                  end
           @visited.add curr
-          puts @searchGrid[x][y]
-          @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
+          puts @possibleEdges.size
+          puts @possibleEdges.empty?
+          ( self.makeEdges curr, (self.adjacent curr, x, y)).each do |e|
+            unless @graphEdges.include? e
+              @possibleEdges.push e
+            end
+          end
         end
       end
     end
@@ -120,7 +131,7 @@ class BackEnd
     end
     # puts adj.length
     adj.each do |n|
-      unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000)
+      unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000) and (@visited.include? n)
         adj.delete n
       end
     end
