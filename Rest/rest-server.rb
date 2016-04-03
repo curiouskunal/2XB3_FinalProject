@@ -2,6 +2,7 @@ require 'sinatra'
 require 'json' 
 
 require '../Backend/FilteringCSV.rb'
+require '../Backend/run.rb'
 
 filter = FilteringCSV.new
 
@@ -18,7 +19,7 @@ get '/:data' do
 
   	jdata = JSON.parse(params[:data],:symbolize_names => true)
 
-  	# put call here
+  	Run.backend(jdata[:start_year].to_i,jdata[:period].to_i,jdata[:temp].to_i,jdata[:percip].to_i,jdata[:accuracy].to_i)
   	
   	return_message = {} 
   	return_message[:status] = "backend(#{jdata[:start_year].to_s} , #{jdata[:period].to_s} , #{jdata[:temp].to_s}, #{jdata[:percip].to_s} , #{jdata[:accuracy].to_s})"
