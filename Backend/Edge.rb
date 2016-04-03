@@ -145,6 +145,19 @@ class Edge
     end
   end
 
+  def eql? other
+    self.class == other.class && self.state == other.state
+  end
+
+  def hash
+    @s1.hash + @s2.hash
+  end
+
+
+  def state
+    self.instance_variables.map { |variable| self.instance_variable_get variable }
+  end
+
   def to_s
     @s1.location.latitude.to_s + "," + @s1.location.longitude.to_s + "," + @s2.location.latitude.to_s  + "," + @s2.location.longitude.to_s
   end

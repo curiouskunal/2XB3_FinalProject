@@ -75,6 +75,18 @@ class Station
     s
   end
 
+  def == other
+    self.class == other.class && self.state == other.state
+  end
+
+  def state
+    self.instance_variables.map { |variable| self.instance_variable_get variable }
+  end
+
+  def hash
+    code.hash
+  end
+
 end
 
 class Location

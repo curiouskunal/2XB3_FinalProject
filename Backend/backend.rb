@@ -74,7 +74,9 @@ class BackEnd
       until @possibleEdges.empty?
         edge = @possibleEdges.pop
         unless edge.cross @graphEdges
+          # puts edge.to_s
           @graphEdges.add edge
+          # puts @graphEdges.include? edge
           a, b = edge.nodes
           unless @graphNodes.include? a
             @graphNodes.add a
@@ -88,13 +90,15 @@ class BackEnd
                    a
                  end
           @visited.add curr
-          print @possibleEdges.size
-          puts @possibleEdges.empty?
+
           ( self.makeEdges curr, (self.adjacent curr, x, y)).each do |e|
             unless @graphEdges.include? e
+              # puts @graphEdges.include? e
               @possibleEdges.push e
             end
           end
+          # print @possibleEdges.size
+          # puts @possibleEdges.empty?
         end
       end
     end
@@ -159,7 +163,7 @@ class BackEnd
     puts 'Finished Graphing'
     File.open 'edges.txt', 'w' do |file|
       @graphEdges.each do |edge|
-        file.write edge.to_s
+        file.write (edge.to_s + "\n")
       end
     end
     puts 'done'
