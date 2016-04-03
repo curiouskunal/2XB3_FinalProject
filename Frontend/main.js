@@ -35,6 +35,31 @@ d3=x;
         .attr("height", 700);
 }
 
+function loadStuff(){
+    console.log("sup");
+    d3.json("../Backend/load.json", function (error, json) {
+        if (!json.Graphs){
+            setTimeout(loadStuff,50);
+        }else if (!json.Cutting) {
+
+            document.getElementById("msg").innerHTML = "Building Graphs";
+            setTimeout(loadStuff, 50);
+        }else if (!json.Testing){
+            document.getElementById("msg").innerHTML="Cutting Stations";
+            setTimeout(loadStuff,50);
+        }else if(!json.loading){
+
+            document.getElementById("msg").innerHTML="testing";
+            console.log("fail");
+            setTimeout(loadStuff,50);
+        }else {
+            document.getElementById("msg").innerHTML=null;
+            test();
+        }});
+
+
+}
+
 function drawMap() {
     svgContainer = d3.select("#map")
         .attr("width", 700)
@@ -50,7 +75,6 @@ function drawMap() {
             .attr("transform", "translate (-20,-360) scale (2.8)")
         ;
 
-        console.log("Hey");
     });
 }
 
