@@ -20,7 +20,7 @@ STATION,STATION_NAME,ELEVATION,LATITUDE,LONGITUDE,DATE,PRCP,TSUN,TMAX,TMIN
 
     # set constants
     #numOfDays = 730 # 2 years
-    tempFile = 'data/tempCSV.csv'
+    tempFile = './data/tempCSV.csv'
 
 
     if File.exist?(outputCSV)
