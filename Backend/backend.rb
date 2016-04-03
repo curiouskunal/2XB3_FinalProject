@@ -70,17 +70,11 @@ class BackEnd
     else
       curr = node
       @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
-      # puts (self.adjacent curr, x, y).length
       @visited.add curr
-      # puts @possibleEdges.empty?
       until @possibleEdges.empty?
-        # puts @possibleEdges.class
         edge = @possibleEdges.pop
-        # puts edge.cross @graphEdges
         unless edge.cross @graphEdges
-          # puts "Adding edge"
           @graphEdges.add edge
-          puts edge.to_s
           a, b = edge.nodes
           unless @graphNodes.include? a
             @graphNodes.add a
@@ -94,7 +88,7 @@ class BackEnd
                    a
                  end
           @visited.add curr
-          puts @possibleEdges.size
+          print @possibleEdges.size
           puts @possibleEdges.empty?
           ( self.makeEdges curr, (self.adjacent curr, x, y)).each do |e|
             unless @graphEdges.include? e
