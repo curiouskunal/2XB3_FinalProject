@@ -5,28 +5,25 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
-console.log(electron);
-console.log(app);
-try {
-    app.on('ready', function () {
-        mainWindow = new BrowserWindow({
-            width: 1280,
-            height: 720
-        });
 
-        mainWindow.loadURL('file://' + __dirname + '/index.html');
 
-        mainWindow.webContents.openDevTools();
-
-        mainWindow.on('closed', function () {
-            mainWindow = null;
-        });
+app.on('ready', function () {
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 720
     });
 
-    app.on('window-all-closed', function () {
-        app.quit();
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
+
+    mainWindow.on('closed', function () {
+        mainWindow = null;
     });
-}catch(err){}
+});
+
+app.on('window-all-closed', function () {
+    app.quit();
+});
+
 
 var svgContainer;
 var d3;
@@ -114,7 +111,7 @@ function drawDots() {
             if (json.STATIONS[i].goodBad) {
                 colour = "#00FF00";
             } else {
-                colour = "#0000FF";
+                colour = "#FF2222";
             }
             svgContainer.append("circle").attr("cx", (json.STATIONS[i].Longitude + 125) * scaleX + leftDisp).attr("cy", bottomDisp - ((json.STATIONS[i].Latitude - 32) * scaleY)).attr("r", radius).attr("fill", colour)
         }
