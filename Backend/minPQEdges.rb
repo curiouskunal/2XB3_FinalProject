@@ -47,7 +47,6 @@ class MinPQEdges
   end
 
   def greater(i,j)
-    # puts @que[i]>@que[j]  , @que[j] , @que[i]
     return @que[i]>=@que[j]
   end
 
@@ -73,9 +72,7 @@ class MinPQEdges
       print "Error: underflow"
     end
     exch(1,@size)
-    # puts @que.class
     min = @que[@size]
-    # puts min.class
     @size-=1
     sink(1)
     @que[@size+1]=nil

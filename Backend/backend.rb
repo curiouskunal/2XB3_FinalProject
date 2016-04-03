@@ -12,6 +12,7 @@ class BackEnd
   @graphEdges = Set.new
   @possibleEdges = MinPQEdges.new
   @fullStationList = Array.new
+  @count = 0
 
 
   #extracted from pareek's code
@@ -54,6 +55,35 @@ class BackEnd
     end
   end
 
+  def self.createEdges node=nil, x=nil, y=nil
+    if node == nil
+      @searchGrid.each_with_index do | row, _y|
+        row.each_with_index do | box, _x|
+          if box.any?
+            box.each do | n |
+              unless @visited.include? n
+                @possibleEdges.push ( self.makeEdges n, (self.adjacent n, _x, _y))
+              end
+            end
+          end
+        end
+      end
+    else
+
+    end
+  end
+
+  def self.trimEdges
+    until @possibleEdges.empty?
+      edge = @possibleEdges.pop
+      unless edge.cross @graphEdges
+        unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
+          @graphEdges.add edge
+        end
+      end
+    end
+  end
+
   def self.graph node=nil, x=nil, y=nil
     if node == nil
       @searchGrid.each_with_index do | row, _y|
@@ -74,12 +104,15 @@ class BackEnd
       until @possibleEdges.empty?
         edge = @possibleEdges.pop
         unless edge.cross @graphEdges
-          # puts edge.to_s
-          @graphEdges.add edge
-          # puts @graphEdges.include? edge
+          unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
+            @graphEdges.add edge
+          else
+            next
+          end
           a, b = edge.nodes
           unless @graphNodes.include? a
             @graphNodes.add a
+            @count += 1
           end
           unless @graphNodes.include? b
             @graphNodes.add b
@@ -92,13 +125,10 @@ class BackEnd
           @visited.add curr
 
           ( self.makeEdges curr, (self.adjacent curr, x, y)).each do |e|
-            unless @graphEdges.include? e
-              # puts @graphEdges.include? e
+            unless @graphEdges.include? e or @graphEdges.include? e.reverse
               @possibleEdges.push e
             end
           end
-          # print @possibleEdges.size
-          # puts @possibleEdges.empty?
         end
       end
     end
@@ -117,19 +147,18 @@ class BackEnd
     xs = [x-1, x, x+1]
     ys = [y-1, y, y+1]
     xs.each do |_x|
-      if (_x >= 0) and (_x < @searchGrid.length)
+      if (_x >= 0) and (_x < @searchGrid[0].length)
         ys.each do |_y|
-          if (_y >= 0) and (_y < @searchGrid[0].length)
-            @searchGrid[_x][_y].each do |n|
+          if (_y >= 0) and (_y < @searchGrid.length)
+            @searchGrid[_y][_x].each do |n|
               adj.add n
             end
           end
         end
       end
     end
-    # puts adj.length
     adj.each do |n|
-      unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000) and (@visited.include? n)
+      unless (not node == n) and ((Edge.distanceCalc node, n ) <  100000)
         adj.delete n
       end
     end
@@ -140,26 +169,11 @@ class BackEnd
     dataFile = 'test3.csv'
     parse (dataFile)
     createGrid()
-
-    # for y in 0..(@searchGrid.length-1)
-    #   # puts y.to_s+" = "
-    #   for x in 0..(@searchGrid[0].length-1)
-    #     # for i in 0..(@searchGrid[y][x].length-1)
-    #     #   puts "    "+@searchGrid[y][x][i].code
-    #     # end
-    #
-    #   end
-    # end
-    # count = 0
-    # @searchGrid.each_with_index do |row, x|
-    #   row.each_index do |y|
-    #     puts x.to_s + "," + y.to_s + ":" + @searchGrid[x][y].length.to_s
-    #     count += @searchGrid[x][y].length
-    #   end
-    # end
-    # puts "total: " + count.to_s
     puts 'Finished Parsing'
-    graph()
+    # graph()
+    createEdges
+    puts 'Created Edges'
+    trimEdges
     puts 'Finished Graphing'
     File.open 'edges.txt', 'w' do |file|
       @graphEdges.each do |edge|

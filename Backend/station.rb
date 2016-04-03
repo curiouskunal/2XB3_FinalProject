@@ -14,6 +14,14 @@ class Station
     @location
   end
 
+  def lat
+    @location.latitude
+  end
+
+  def lon
+    @location.longitude
+  end
+
   def elevation
     @elevation
   end

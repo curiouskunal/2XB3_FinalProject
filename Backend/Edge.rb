@@ -93,56 +93,65 @@ class Edge
     return true;
   end
 
-  def cross(vals1)
-    if (vals1==Set.new())
-      return false
-    end
-    if vals1.is_a?(Edge)
-      tmp1, tmp2=vals1.nodes()
-      return Edge.checkPoints(@s1, @s2, tmp1, tmp2)
-    else
-      # puts vals1
-      if (vals1.empty?)
-        return false
-      elsif (!vals1.empty?)
-        doesCross=false
-        vals1.each do |tmp|
-          tmp1, tmp2=tmp.nodes()
-          if (!doesCross)
-            doesCross = Edge.checkPoints(@s1, @s2, tmp1, tmp2)
-          end
-        end
-        return doesCross
+  def cross(other)
+    if other.is_a? Edge
+      #Other
+      a, b = other.nodes
+      x1, y1, x2, y2 = a.lon, a.lat, b.lon, b.lat
+      if x2 - x1 == 0
+        puts 'x2o == x1o, ' + x2.to_s + ', ' + x1.to_s
+      end
+      mo = (y2 - y1)/(x2 - x1)
+      bo = y1 - mo * x1
+
+
+      # Self
+      a, b = self.nodes
+      x1, y1, x2, y2 = a.lon, a.lat, b.lon, b.lat
+      if x2 - x1 == 0
+        puts 'x2s == x1s, '  + x2.to_s + ', ' + x1.to_s
+      end
+      ms = (y2 - y1)/(x2 - x1)
+      bs = y1 - ms * x1
+
+      #Equation
+      if ms - mo == 0
+        puts 'ms == mo, ' + ms.to_s + ', ' + mo.to_s
+      end
+      x = (bo - bs) / (ms - mo)
+      y = ms * x + bs
+
+      #Cross?
+      if a.lon > b.lon
+        x_max, x_min = a.lon, b.lon
+      else
+        x_max, x_min = b.lon, a.lon
+      end
+
+      if a.lat > b.lat
+        y_max, y_min = a.lat, b.lon
+      else
+        y_max, y_min = b.lat, a.lon
+      end
+
+      t = 0
+      if (x < x_max - t) and (x > x_min + t) and (y < y_max - t) and (y > y_min + t)
+        return true
       else
         return false
       end
-    end
-  end
-
-  def self.checkPoints(s1, s2, s3, s4)
-    x1=s1.location.latitude*(Math::PI/180.0)
-    x2=s2.location.latitude*(Math::PI/180.0)
-    x3=s3.location.latitude*(Math::PI/180.0)
-    x4=s4.location.latitude*(Math::PI/180.0)
-    y1=s1.location.longitude*(Math::PI/180.0)
-    y2=s2.location.longitude*(Math::PI/180.0)
-    y3=s3.location.longitude*(Math::PI/180.0)
-    y4=s4.location.longitude*(Math::PI/180.0)
-
-    px=(((x1*y1-y1*x2)*(x3-x4))-((x1-x2)*(x3*y4-y3*x4)))/(((x1-x2)*(y3-y4))-(y1-y2)*(x3-x4))
-    py=(((x1*y2-y1*x2)*(y3-y4))-((y1-y2)*(x3*y4-y3*x4)))/(((x1-x2)*(y3-y4))-((y1-y2)*(x3-x4)))
-
-    det = ((x1-x2)*(y3-y4))-((y1-y2)*(x3-x4))
-    if (det ==0)
-      return false;
     else
-      if (((x1<=px&&px<=x2)||(x2<=px&&px<=x1))&&((x3<=px&&px<=x4)||(x4<=px&&px<=x3)))
-        if (((y1<=py&&py<=y2)||(y2<=py&&py<=y1))&&((y3<=py&&py<=y4)||(y4<=py&&py<=y3)))
+      other.each do |e|
+        if self.cross e
           return true
         end
       end
       return false
     end
+  end
+
+  def reverse
+    Edge.new @s2, @s1, 0
   end
 
   def eql? other
@@ -174,3 +183,6 @@ end
 # print tmp.cross(hi)
 # puts "over"
 
+# e1 = Edge.new((Station.new 0, 0, 0, 38.28, -119.61), (Station.new 0, 0, 0, 36.9111,-119.305), 0)
+# e2 = Edge.new((Station.new 0, 0, 0, 38.07,-119.23), (Station.new 0, 0, 0, 37.25028,-119.70528), 0)
+# puts e1.cross e2
