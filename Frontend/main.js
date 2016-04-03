@@ -25,12 +25,15 @@ app.on('ready', function(){
 	});
 });
 
-
-
+var svgContainer;
+var d3;
+function initialize(x) {
+d3=x;
     //Make an SVG Container
-    var svgContainer = d3.select("#map")
+    svgContainer = d3.select("#map")
         .attr("width", 700)
         .attr("height", 700);
+}
 
 function drawMap() {
     svgContainer = d3.select("#map")
