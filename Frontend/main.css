@@ -1,7 +1,7 @@
 html{ height: 100%}
-body{ height: 100%; overflow:hidden;}
+body{ height: 100%; overflow:hidden; font-family: monospace}
 
 /*Colours*/
-.bg1{background-color:  #7BDCEF }
-.bg2{background-color:  #1a75ff}
+.bg1{background-color:  #3E72B3}
+.bg2{background-color:  #D5F9FF}
 
