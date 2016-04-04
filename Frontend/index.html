@@ -21,7 +21,7 @@
     <!-------------------           input pane             ---------------------->
     <!--------------------------------------------------------------------------->
     <tr>
-        <td width="29.5%" class="bg1" style="vertical-align: top;text-align: center;">
+        <td width="29.5%" class="bg1" style="vertical-align: top;text-align: center; color:white">
             <h1>Sample Period</h1>
             <table style="display: inline-block">
                 <tr>
@@ -104,12 +104,12 @@
             <table style="display: inline-block">
                 <tr>
                     <td>
-                        Temp
+                        Temperature
                         <br>
                         <input id="temp" type="number" min="0" placeholder="+/- X Degrees">
                     </td>
                     <td>
-                        Percip
+                        Precipitation
                         <br>
                         <input id="percip" type="number" min="0" placeholder="+/- X millimeters">
                     </td>
@@ -124,9 +124,12 @@
         </td>
         <td class="bg2" style="vertical-align: top;text-align: center;">
             <div style="height: 10px"></div>
-            <div style="vertical-align: middle;background-color: white">
+            <div style="vertical-align: middle;">
+            
                 <a style="color: green; font-size: larger;">GREEN = KEEP</a>
+                <a style="color: #D5F9FF; font-size: larger;">_______</a>
                 <a style="color: #FF2222; font-size: larger;">RED = CAN BE REMOVE</a>
+                
             </div>
             <div style="height: 10px"></div>
             <div id="msg"></div>
