@@ -90,9 +90,6 @@ class Edge
       #Other
       oa, ob = other.nodes
       x1o, y1o, x2o, y2o = oa.lon, oa.lat, ob.lon, ob.lat
-      # if x2o - x1o == 0
-      #   puts 'x2o == x1o, ' + x2o.to_s + ', ' + x1o.to_s
-      # end
       mo = (y2o - y1o)/(x2o - x1o)
       bo = y1o - mo * x1o
 
@@ -100,21 +97,10 @@ class Edge
       # Self
       sa, sb = self.nodes
       x1s, y1s, x2s, y2s = sa.lon, sa.lat, sb.lon, sb.lat
-      # if x2s - x1s == 0
-      #   puts 'x2s == x1s, '  + x2s.to_s + ', ' + x1s.to_s
-      # end
       ms = (y2s - y1s)/(x2s - x1s)
       bs = y1s - ms * x1s
 
       #Equation
-      # if x2s - x1s == 0
-      #   puts 'x2s == x1s, ' + ms.to_s + ', ' + mo.to_s + ', ' + self.to_s
-      #   # return true
-      # end
-      # if y2s - y1s == 0
-      #   puts 'y2s == y1s, ' + ms.to_s + ', ' + mo.to_s + ', ' + self.to_s
-      #   return true
-      # end
       x = (bo - bs) / (ms - mo)
       y = ms * x + bs
 
@@ -135,7 +121,7 @@ class Edge
       if ((x < x_max) and not x.near? x_max) and
           ((x > x_min) and not x.near? x_min) and
           ((y < y_max) and not y.near? y_max) and
-          ((y > y_min) and not y.near? y_min) and
+          ((y > y_min) and not y.near? y_min)
         return true
       else
         return false

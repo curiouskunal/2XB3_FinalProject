@@ -74,7 +74,7 @@ class BackEnd
   def self.trimEdges
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      unless edge.cross @graphEdges
+      unless false #edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
         end
@@ -156,7 +156,7 @@ class BackEnd
       end
     end
     adj.each do |n|
-      unless (not node == n) and ((Edge.distanceCalc node, n ) <  200000)
+      unless (not node == n) and ((Edge.distanceCalc node, n ) <  50000)
         adj.delete n
       end
     end
@@ -165,13 +165,13 @@ class BackEnd
 
   def self.run
     dataFile = 'test3.csv'
-    # parse (dataFile)
-    (-123..-112).each do |y|
-      (32..42).each do |x|
-        @fullStationList.push (Station.new 0, 0, 0, x,y)
-
-      end
-    end
+    parse (dataFile)
+    # (-123..-112).each do |y|
+    #   (32..42).each do |x|
+    #     @fullStationList.push (Station.new 0, 0, 0, x,y)
+    #
+    #   end
+    # end
     createGrid()
 
     # puts @searchGrid.to_s
