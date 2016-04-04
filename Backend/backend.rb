@@ -27,7 +27,6 @@ class BackEnd
         #so that the 0th element is not blank
         if !roundOne
           @fullStationList.push(currentStation)
-          puts currentStation.weather[currentStation.weather.length-1].t_max
         else
           roundOne=false;
         end
@@ -75,8 +74,7 @@ class BackEnd
   def self.trimEdges
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      #puts edge
-      unless (edge.cross @graphEdges) or (edge.checkTolerance)
+      unless false #edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
         end
@@ -137,12 +135,7 @@ class BackEnd
   def self.makeEdges curr, nodes
     edges = Set.new
     nodes.each do |node|
-     # puts "----------------------------------------------------------------------------"
-     # puts curr
-     # puts "----------------------------------------------------------------------------"
-     # puts node
-      #puts node.weather[node.weather.length-1].t_max
-      edges.add (Edge.new curr, node, 20)
+      edges.add (Edge.new curr, node, 0)
     end
     edges
   end
@@ -171,17 +164,14 @@ class BackEnd
   end
 
   def self.run
-    dataFile = 'test.csv'
+    dataFile = 'test3.csv'
     parse (dataFile)
-
-=begin
-    (-123..-112).each do |y|
-      (32..42).each do |x|
-        @fullStationList.push (Station.new 0, 0, 0, x,y)
-
-      end
-    end
-=end
+    # (-123..-112).each do |y|
+    #   (32..42).each do |x|
+    #     @fullStationList.push (Station.new 0, 0, 0, x,y)
+    #
+    #   end
+    # end
     createGrid()
 
     # puts @searchGrid.to_s
@@ -194,7 +184,6 @@ class BackEnd
     puts 'Finished Graphing'
     File.open 'edges.txt', 'w' do |file|
       @graphEdges.each do |edge|
-
         file.write (edge.to_s + "\n")
       end
     end
