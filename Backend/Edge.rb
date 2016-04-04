@@ -85,61 +85,66 @@ class Edge
     return @length>=other.distance()
   end
 
-
-  def self.cross(vals1, vals2)
-    if (vals2==nil)
-      return checkPoints(@s1, @s2, vals1.s1, vals1.s2)
-    end
-    return true;
-  end
-
   def cross(other)
     if other.is_a? Edge
       #Other
-      a, b = other.nodes
-      x1, y1, x2, y2 = a.lon, a.lat, b.lon, b.lat
-      if x2 - x1 == 0
-        puts 'x2o == x1o, ' + x2.to_s + ', ' + x1.to_s
-      end
-      mo = (y2 - y1)/(x2 - x1)
-      bo = y1 - mo * x1
+      oa, ob = other.nodes
+      x1o, y1o, x2o, y2o = oa.lon, oa.lat, ob.lon, ob.lat
+      # if x2o - x1o == 0
+      #   puts 'x2o == x1o, ' + x2o.to_s + ', ' + x1o.to_s
+      # end
+      mo = (y2o - y1o)/(x2o - x1o)
+      bo = y1o - mo * x1o
 
 
       # Self
-      a, b = self.nodes
-      x1, y1, x2, y2 = a.lon, a.lat, b.lon, b.lat
-      if x2 - x1 == 0
-        puts 'x2s == x1s, '  + x2.to_s + ', ' + x1.to_s
-      end
-      ms = (y2 - y1)/(x2 - x1)
-      bs = y1 - ms * x1
+      sa, sb = self.nodes
+      x1s, y1s, x2s, y2s = sa.lon, sa.lat, sb.lon, sb.lat
+      # if x2s - x1s == 0
+      #   puts 'x2s == x1s, '  + x2s.to_s + ', ' + x1s.to_s
+      # end
+      ms = (y2s - y1s)/(x2s - x1s)
+      bs = y1s - ms * x1s
 
       #Equation
-      if ms - mo == 0
-        puts 'ms == mo, ' + ms.to_s + ', ' + mo.to_s
-      end
+      # if x2s - x1s == 0
+      #   puts 'x2s == x1s, ' + ms.to_s + ', ' + mo.to_s + ', ' + self.to_s
+      #   # return true
+      # end
+      # if y2s - y1s == 0
+      #   puts 'y2s == y1s, ' + ms.to_s + ', ' + mo.to_s + ', ' + self.to_s
+      #   return true
+      # end
       x = (bo - bs) / (ms - mo)
       y = ms * x + bs
 
       #Cross?
-      if a.lon > b.lon
-        x_max, x_min = a.lon, b.lon
+      if sa.lon > sb.lon
+        x_max, x_min = sa.lon, sb.lon
       else
-        x_max, x_min = b.lon, a.lon
+        x_max, x_min = sb.lon, sa.lon
       end
 
-      if a.lat > b.lat
-        y_max, y_min = a.lat, b.lon
+      if sa.lat > sb.lat
+        y_max, y_min = sa.lat, sb.lon
       else
-        y_max, y_min = b.lat, a.lon
+        y_max, y_min = sb.lat, sa.lon
       end
 
-      t = 0
-      if (x < x_max - t) and (x > x_min + t) and (y < y_max - t) and (y > y_min + t)
+      # t = 1
+      if ((x < x_max) and not x.near? x_max) and
+          ((x > x_min) and not x.near? x_min) and
+          ((y < y_max) and not y.near? y_max) and
+          ((y > y_min) and not y.near? y_min) and
         return true
       else
         return false
       end
+      # if (x < x_max - t) and (x > x_min + t) and (y < y_max - t) and (y > y_min + t)
+      #   return true
+      # else
+      #   return false
+      # end
     else
       other.each do |e|
         if self.cross e
@@ -169,6 +174,12 @@ class Edge
 
   def to_s
     @s1.location.latitude.to_s + "," + @s1.location.longitude.to_s + "," + @s2.location.latitude.to_s  + "," + @s2.location.longitude.to_s
+  end
+end
+
+class Float
+  def near? other, epsilon = 1e-6
+    (self - other).abs < epsilon.to_f
   end
 end
 
