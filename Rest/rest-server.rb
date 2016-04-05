@@ -1,8 +1,8 @@
 require 'sinatra' 
-require 'json' 
+require 'json'
 
-require '../Backend/FilteringCSV.rb'
-require '../Backend/run.rb'
+Dir.chdir("../Backend/")
+require './run.rb'
 
 filter = FilteringCSV.new
 
@@ -26,23 +26,6 @@ get '/query/:data' do
   	return_message.to_json 
 end
 
-
-#filteringCSV Testing
-get '/test/:data' do
-	
-	:data.to_json
-
-  	# "Hello #{params['input']} , #{params['output']} , #{params['days']}!"
-
-  	jdata = JSON.parse(params[:data],:symbolize_names => true)
-  	
-  	"Hello #{jdata[:input].to_s} , #{jdata[:output].to_s} , #{jdata[:days].to_s}!"
- 	
- 	filter.filterCSVdata('../Backend/data/Testing.csv','./data/RESTout.csv', 30)
-
- 	return_message[:status] = "Running Filtering with #{jdata[:input].to_s} , #{jdata[:output].to_s} , #{jdata[:days].to_s}!" 
-  	return_message.to_json  
-end
 
 get '/terminate' do
 	body "I'll be back..."

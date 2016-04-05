@@ -74,7 +74,7 @@ class BackEnd
   def self.trimEdges
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      unless false #edge.cross @graphEdges
+      unless edge.is_related?#or edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
         end
