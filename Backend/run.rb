@@ -1,4 +1,5 @@
 require './backend.rb'
+require './SQL'
 require './Edge'
 
 #!/usr/bin/env ruby
@@ -46,12 +47,20 @@ class Run
     f.close
 	end
 end
+
 puts "Setting Tolerances"
 Edge.setTolerances(1,5,10);
 puts "Quering SQL File"
 dataFile = 'test.csv';
 puts "Parsing"
-BackEnd.parse (dataFile);
+#BackEnd.setData( SQL.parse(2000,2))
+tmp =  SQL.parse(2000,2);
+tmp.each do |q|
+  if (q.code=="US1CALA0049")
+    puts "hi"
+  end
+end
+#BackEnd.parse (dataFile);
 puts "Formulating Grid Network"
 BackEnd.createGrid();
 puts "Building Graphs"
@@ -59,7 +68,10 @@ BackEnd.createEdges();
 puts "Triming Graph"
 BackEnd.trimEdges();
 puts "Testing Design"
-BackEnd.checkRelated();
+tmp = BackEnd.checkRelated();
+File.open '../Frontend/goodbad.json', 'w' do |file|
+
+end
 
 tmp = BackEnd.getEdges();
 

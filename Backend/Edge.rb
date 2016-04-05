@@ -24,16 +24,17 @@ class Edge
   end
 
   def self.getLength(val1,val2)
-    leng = val1.length;
-    if (val2.length<leng)
-      leng = val2.length;
+    if (val2.length<val1.length)
+      return val2.length;
+    else
+      return val1.length;
     end
-    return leng;
   end
 
   def self.checkTempTolerance(val1, val2)
     tmpVals=0.0;
-    leng=getLength(val1,val2)
+    leng=Edge.getLength(val1,val2)
+    puts leng
     for i in 0..(leng-1)
       if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
         tmpVals=tmpVals+1
@@ -54,6 +55,13 @@ class Edge
   end
 
   def self.withinTolerance(val1, val2, tolerance)
+=begin
+    puts "--------------------"
+    puts val1
+    puts val2
+    puts val1>val2
+    puts "--------------------"
+=end
     if (val1>val2)
       return (val1-val2)<=tolerance
     end
