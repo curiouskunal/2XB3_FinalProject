@@ -5,10 +5,12 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
+var width = 0;
 
 
 app.on('ready', function () {
     mainWindow = new BrowserWindow({
+        resizable: false,
         width: 1280,
         height: 720
     });
@@ -59,11 +61,22 @@ function initialize(x) {
 
 }
 
+function increaseProgressBar(num) {
+  var elem = document.getElementById("myBar");   
+    if (width >= 100) {
+    } else {
+      width = num; 
+      elem.style.width = width + '%'; 
+      document.getElementById("label").innerHTML = width * 1  + '%';
+  }
+}
+
+
 function loadStuff() {
     console.log("hi");
 //clear
     d3.selectAll("svg > *").remove();
-    drawMap();
+    // drawMap();
     var query = '{'
         + '"start_year":' + document.getElementById("start_year").value
         + ',"period":' + document.getElementById("period").value
@@ -77,6 +90,7 @@ function loadStuff() {
     xhReq.open("GET", 'http://localhost:8080/query/' + query);
     xhReq.send(null);
     console.log("hii");
+    document.getElementById("msg").innerHTML = " ";
     load();
 
 
@@ -93,24 +107,45 @@ function load() {
     // console.log("sup");
     d3.json("../Backend/load.json", function (error, json) {
         if (!json.Graphs) {
+            console.log("sup");
             setTimeout(load, 50);
         } else if (!json.Cutting) {
-
+            console.log("sup")
             document.getElementById("msg").innerHTML = "Building Graphs";
             setTimeout(load, 50);
+            increaseProgressBar(30);
         } else if (!json.Testing) {
+            console.log("sup");
             document.getElementById("msg").innerHTML = "Cutting Stations";
             setTimeout(load, 50);
+            increaseProgressBar(50);
         } else if (!json.loading) {
-
+            console.log("sup")
             document.getElementById("msg").innerHTML = "testing";
             console.log("fail");
             setTimeout(load, 50);
+            increaseProgressBar(75);
         } else {
-            document.getElementById("msg").innerHTML = null;
-            test();
+            
+            increaseProgressBar(100);
+
+            setTimeout(finalTing, 1000)
+
+            // test();
         }
     });
+}
+
+function finalTing(){
+    document.getElementById("msg").innerHTML = null;
+    document.getElementById("label").innerHTML = null
+    document.getElementById("myBar").innerHTML = null
+    document.getElementById("myProgress").innerHTML = null
+
+
+    drawMap();
+
+    setTimeout(test, 50);
 }
 
 

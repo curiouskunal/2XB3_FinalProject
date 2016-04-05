@@ -36,6 +36,10 @@ class BackEnd
     end
   end
 
+  def self.setData(data)
+      @fullStationList=data;
+  end
+
   def self.createGrid
     westLong, northLat = -125, 42
     eastLong, southLat = -114, 32
@@ -45,9 +49,15 @@ class BackEnd
     numStations = @fullStationList.length-1
 
     for i in 0..numStations
+
       tmp=@fullStationList.pop();
-
-
+      puts "------------------------------"
+      puts numStations
+      puts i
+     # puts tmp
+      puts tmp.location.latitude
+      puts tmp.location.longitude
+      puts "------------------------------"
       unless ((tmp.location.latitude-southLat).floor < 0) or
           ((tmp.location.latitude-southLat).floor > @searchGrid.length) or
           ((tmp.location.longitude-westLong).floor < 0) or
@@ -142,6 +152,12 @@ class BackEnd
   def self.makeEdges curr, nodes
     edges = Set.new
     nodes.each do |node|
+     puts "-------------------"
+     puts curr.code
+     puts curr.weather.length
+     puts node.code
+     puts node.weather.length
+     puts "-------------------"
       edges.add (Edge.new curr, node)
     end
     edges
