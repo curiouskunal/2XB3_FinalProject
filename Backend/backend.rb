@@ -151,6 +151,12 @@ class BackEnd
     edges = Set.new
     nodes.each do |node|
       edges.add (Edge.new curr, node)
+      # puts '-----------------------------'
+      # puts curr.code
+      # puts curr.weather.length
+      # puts node.code
+      # puts node.weather.length
+
     end
     edges
   end

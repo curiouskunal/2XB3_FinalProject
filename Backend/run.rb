@@ -106,7 +106,20 @@ class Run
   end
 end
 
-
+# puts "Setting Tolerances"
+# Edge.setTolerances(1, 5, 10);
+# puts "Quering SQL File"
+# dataFile = 'test.csv';
+# puts "Parsing"
+# BackEnd.setData( SQL.parse(2000,2))
+# #BackEnd.parse (dataFile);
+# puts "Formulating Grid Network"
+# BackEnd.createGrid();
+# puts "Building Graphs"
+# BackEnd.createEdges();
+# puts "Triming Graph"
+# BackEnd.trimEdges();
+# puts "Testing Design"
 
 
 =begin

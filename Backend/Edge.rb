@@ -35,6 +35,7 @@ class Edge
     tmpVals=0.0;
     leng=Edge.getLength(val1,val2)
     for i in 0..(leng-1)
+      puts i.to_s + ' at ' + val1[i].date.to_s + ' and ' + val2[i].date.to_s
       if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
         tmpVals=tmpVals+1
       end
@@ -54,6 +55,9 @@ class Edge
   end
 
   def self.withinTolerance(val1, val2, tolerance)
+    if !val1 or !val2
+      return false
+    end
 =begin
     puts "--------------------"
     puts val1
