@@ -102,8 +102,8 @@ class SQL
     end
   end
 
-  def self.parse
-    self.getValid 2000, 1
+  def self.parse start, period
+    self.getValid start, period
     # puts 'Got ' + @validStations.size.to_s + ' valid station'
     stationList = Array.new
 
@@ -120,15 +120,15 @@ class SQL
           # puts data
           currentStation.add_weather Weather.new data[0][0].to_s, data[0][1].to_s, data[0][2].to_s, data[0][3].to_s
         end
+        stationList.push currentStation
       end
-      stationList.push currentStation
       i = i + 1
     end
 
+    puts stationList.length
     return stationList
   end
-
-
 end
 
-SQL.parse
+
+SQL.parse 2000,2
