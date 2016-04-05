@@ -34,7 +34,6 @@ class Edge
   def self.checkTempTolerance(val1, val2)
     tmpVals=0.0;
     leng=Edge.getLength(val1,val2)
-    puts leng
     for i in 0..(leng-1)
       if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
         tmpVals=tmpVals+1
