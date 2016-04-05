@@ -248,3 +248,17 @@ function test(){
 //svgContainer.sort(function(a,b){console.log(a);console.log(b);return d3.ascending(a.value, b.value);});
 document.getElementById("submitButton").disabled = false;
 }
+
+
+function updatePeriod(){
+    var in_start_yr = document.getElementById("start_year").value;
+    var period = 2014 - in_start_yr+1;
+    var out ="";
+        for (var i=1;i<period;i++){
+
+            out+="<option value="+i;
+            out+=">"+i;
+            out+=" Year<"+"/option>";
+        }
+    document.getElementById("period").innerHTML=out;
+}
