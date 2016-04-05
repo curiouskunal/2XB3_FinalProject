@@ -4,19 +4,38 @@ require 'set'
 #the percent days in tolerance for rain and temperature aswell
 #as calculate the length of the edge
 class Edge
+  percipTolerance;
+  tempTolerance;
+  daysAccuracy;
 
-  def initialize(node1, node2, tolerance)
+  def initialize(node1, node2)
     @s1=node1
     @s2=node2
+
     #pre-calculate all values
-    # @tempDays = PercentTempDays(@s1.weather,@s2.weather,tolerance)
-    # @rainDays = PercentRainDays(@s1.weather,@s2.weather,tolerance)
+    @tempDays = PercentTempDays(@s1.weather,@s2.weather)
+    @rainDays = PercentRainDays(@s1.weather,@s2.weather)
+    @withinTolerance_ = (@tempDays < @s1.weather.length) or (@rainDays < @s1.weather.length)
     @length = distanceCalc(@s1,@s2)
   end
 
-  def PercenTemptDays(val1, val2, tolerance)
+  def self.setTolerances(){
+
+  }
+  end
+
+  def checkTolerance
+    return @withinTolerance
+  end
+
+  def PercentTempDays(val1, val2)
     tmpVals=0.0;
-    for i in 0..(val1.length-1)
+    leng = val1.length;
+    if (val2.length<leng)
+      leng = val2.length
+    end
+    for i in 0..(leng-1)
+
       if (withinTolerance(val1[i].t_max, val2[i].t_max, tolerance) && withinTolerance(val1[i].t_min, val2[i].t_min, tolerance))
         tmpVals=tmpVals+1
       end
@@ -24,9 +43,13 @@ class Edge
     return tmpVals/val1.length
   end
 
-  def PercentRainDays(val1, val2, tolerance)
+  def PercentRainDays(val1, val2)
     tmpVals=0.0;
-    for i in 0..(val1.length-1)
+    leng = val1.length;
+    if (val2.length<leng)
+      leng = val2.length
+    end
+    for i in 0..(leng-1)
       if (withinTolerance(val1[i].precipitation, val2[i].precipitation, tolerance))
         tmpVals=tmpVals+1
       end
@@ -86,6 +109,7 @@ class Edge
   end
 
   def cross(other)
+    return false
     if other.is_a? Edge
       #Other
       oa, ob = other.nodes
