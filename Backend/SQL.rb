@@ -125,10 +125,10 @@ class SQL
       i = i + 1
     end
 
-    puts stationList.length
+    # for sta in stationList
+    #   puts sta.name
+    #   puts '-----------------------------------------------'
+    # end
     return stationList
   end
 end
-
-
-SQL.parse 2000,2
