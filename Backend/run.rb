@@ -54,13 +54,8 @@ puts "Quering SQL File"
 dataFile = 'test.csv';
 puts "Parsing"
 #BackEnd.setData( SQL.parse(2000,2))
-tmp =  SQL.parse(2000,2);
-tmp.each do |q|
-  if (q.code=="US1CALA0049")
-    puts "hi"
-  end
-end
-#BackEnd.parse (dataFile);
+
+BackEnd.parse (dataFile);
 puts "Formulating Grid Network"
 BackEnd.createGrid();
 puts "Building Graphs"
@@ -69,9 +64,42 @@ puts "Triming Graph"
 BackEnd.trimEdges();
 puts "Testing Design"
 tmp = BackEnd.checkRelated();
+first=true;
+checkedVals = Set.new
 File.open '../Frontend/goodbad.json', 'w' do |file|
+  file.write('{
+  "STATIONS":['+"\n")
+	tmp.each do |key,value|
+		value.each do |station|
+      unless first
 
+				file.write(",")
+      end
+			first =false;
+      checkedVals.add(station.code);
+			if (key == station.code)
+				file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":2}'+"\n")
+      else
+				file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":1}'+"\n")
+      end
+		end
+  end
+	BackEnd.parse (dataFile);
+	stationList=BackEnd.getData();
+	stationList.each do |stations|
+
+		unless checkedVals.include? stations.code
+			file.write(",")
+			file.write('{"Longitude":'+stations.location.longitude.to_s+', "Latitude":'+stations.location.latitude.to_s+', "goodBad":0}'+"\n")
+    end
+
+
+  end
+	file.write(' ]
+}'+"\n")
 end
+
+
 
 tmp = BackEnd.getEdges();
 

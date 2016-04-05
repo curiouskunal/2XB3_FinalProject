@@ -260,10 +260,13 @@ function test() {
         for (var
                  i = 0; i < json.STATIONS.length; i++) {
             var colour = "#FFFFFF";
-            if (json.STATIONS[i].goodBad) {
-                colour = "#00FF00";
-            } else {
+            if (json.STATIONS[i].goodBad==2) {
                 colour = "#FF2222";
+            } else if (json.STATIONS[i].goodBad==1){
+
+            colour = "#0000FF";
+            }else{
+                colour = "#00FF00";
             }
             /* svgContainer.append("circle")
              .attr("cx", (json.STATIONS[i].Longitude) * scaleX + leftDisp)
