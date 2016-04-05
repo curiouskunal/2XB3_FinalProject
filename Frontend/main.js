@@ -201,7 +201,7 @@ function CheckAndload(){
     var in_period = document.getElementById("period").value;
     var el = document.getElementById("msg");
 
-    if (2016 - in_start_yr >= in_period){
+    if (2014 - in_start_yr >= in_period){
         console.log("input parameters valid.");
         el.style.color = "green";
         document.getElementById("msg").innerHTML = " ";
