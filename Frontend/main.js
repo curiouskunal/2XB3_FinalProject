@@ -5,10 +5,12 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
+var width = 0;
 
 
 app.on('ready', function () {
     mainWindow = new BrowserWindow({
+        resizable: false,
         width: 1280,
         height: 720
     });
@@ -59,6 +61,17 @@ function initialize(x) {
 
 }
 
+function increaseProgressBar(num) {
+  var elem = document.getElementById("myBar");   
+    if (width >= 100) {
+    } else {
+      width = num; 
+      elem.style.width = width + '%'; 
+      document.getElementById("label").innerHTML = width * 1  + '%';
+  }
+}
+
+
 function loadStuff() {
     console.log("hi");
 //clear
@@ -93,21 +106,27 @@ function load() {
     // console.log("sup");
     d3.json("../Backend/load.json", function (error, json) {
         if (!json.Graphs) {
+            console.log("sup");
             setTimeout(load, 50);
         } else if (!json.Cutting) {
-
+console.log("sup")
             document.getElementById("msg").innerHTML = "Building Graphs";
             setTimeout(load, 50);
+            increaseProgressBar(30);
         } else if (!json.Testing) {
+            console.log("sup");
             document.getElementById("msg").innerHTML = "Cutting Stations";
             setTimeout(load, 50);
+            increaseProgressBar(50);
         } else if (!json.loading) {
-
+            console.log("sup")
             document.getElementById("msg").innerHTML = "testing";
             console.log("fail");
             setTimeout(load, 50);
+            increaseProgressBar(75);
         } else {
             document.getElementById("msg").innerHTML = null;
+            increaseProgressBar(100);
             test();
         }
     });
