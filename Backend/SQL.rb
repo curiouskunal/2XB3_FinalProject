@@ -6,7 +6,7 @@ require_relative 'weather.rb'
 
 class SQL
   @db = SQLite3::Database.open "California.db"
-  @validStations = Hash.new("Valid Stations")
+  @validStations = Hash.new
 
 
   def self.makeSQL
@@ -96,7 +96,7 @@ class SQL
         # puts stationID[0] + " at "
         if (data.length >= 365*period)
           @validStations[stationID[0]] = data
-          # puts @validStations[stationID[0]]
+          # puts stationID[0]
         end
       end
     end
@@ -107,12 +107,13 @@ class SQL
     # puts 'Got ' + @validStations.size.to_s + ' valid station'
     stationList = Array.new
 
-    ids = @db.execute "SELECT Id FROM Station"
-    stationInfo = @db.execute "SELECT * FROM Station"
+    ids = @db.execute "SELECT Id FROM Station ORDER BY Id"
+    stationInfo = @db.execute "SELECT * FROM Station ORDER BY Id"
+
     i = 0
     for stationID in ids
-      if @validStations[stationID[0]].to_s != 'Valid Stations'
-        # puts 'At ' + i.to_s + ' station number'
+      # puts stationID[0].to_s + " and " + stationInfo[i][0].to_s + " at " + i.to_s
+      if @validStations[stationID[0]] != nil
         currentStation = Station.new stationInfo[i][0], stationInfo[i][1], stationInfo[i][4], stationInfo[i][2], stationInfo[i][3]
         for date in @validStations[stationID[0]]
           data = @db.execute "SELECT * FROM #{stationID[0]} WHERE Id = ?", date
@@ -120,15 +121,18 @@ class SQL
           # puts data
           currentStation.add_weather Weather.new data[0][0].to_s, data[0][1].to_s, data[0][2].to_s, data[0][3].to_s
         end
+        # puts currentStation.code
         stationList.push currentStation
       end
-      i = i + 1
+      i += 1
     end
 
     # for sta in stationList
-    #   puts sta.name
+    #   puts sta.code
     #   puts '-----------------------------------------------'
     # end
     return stationList
   end
 end
+
+# SQL.parse 2000,2
