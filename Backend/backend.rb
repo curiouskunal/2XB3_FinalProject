@@ -163,6 +163,28 @@ class BackEnd
     adj
   end
 
+  def self.checkRelated t_max, t_min, prcp
+    graph = Hash.new
+    @graphNodes.each do |node|
+      graph[node.code] = Set.new.add node
+    end
+    @graphEdges.each do |edge|
+      a, b = edge.nodes
+      if graph[a.code].size == 1
+        if Edge.is_related? a, b
+          graph[b.code].add graph[a.code][0]
+          graph.delete a.code
+        end
+      elsif graph[b.code].size == 1
+        if Edge.is_related? a, b
+          graph[a.code].add graph[b.code][0]
+          graph.delete b.code
+        end
+      end
+    end
+    graph
+  end
+    
   def self.run
     dataFile = 'test3.csv'
     parse (dataFile)
