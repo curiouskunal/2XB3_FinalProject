@@ -201,12 +201,12 @@ function CheckAndload(){
     var in_period = document.getElementById("period").value;
     var el = document.getElementById("msg");
 
-
     if (2016 - in_start_yr >= in_period){
         console.log("input parameters valid.");
         el.style.color = "green";
         document.getElementById("msg").innerHTML = " ";
-        loadStuff()
+        document.getElementById("submitButton").disabled = true; 
+        loadStuff();
     }else{
         console.log("Error: input parameters not valid.");
         el.style.color = "red";
@@ -243,10 +243,8 @@ function test(){
                 .attr("cy", projection(aa)[1])
                 .attr("r", "2px")
                 .attr("fill", colour);
-
         }
-
     });
 //svgContainer.sort(function(a,b){console.log(a);console.log(b);return d3.ascending(a.value, b.value);});
-
+document.getElementById("submitButton").disabled = false;
 }
