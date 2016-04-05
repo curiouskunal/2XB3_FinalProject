@@ -28,12 +28,12 @@ class Run
     f.close
 
     puts "Setting Tolerances"
-    Edge.setTolerances(1, 5, 10);
+    Edge.setTolerances(temp, percip, accuracy);
     puts "Quering SQL File"
     dataFile = 'test.csv';
     puts "Parsing"
-    #BackEnd.setData( SQL.parse(2000,2))
-    BackEnd.parse (dataFile);
+    BackEnd.setData(SQL.parse(start_year, period)[0])
+    #BackEnd.parse (dataFile);
 
     f = File.open("./load.json", 'w')
     f.write('{"Graphs":true, "Cutting":false, "Testing":false, "loading":false}')
@@ -58,19 +58,21 @@ class Run
     BackEnd.trimEdges();
     puts "Testing Design"
 
+    Run.writeOutputFile(start_year, period)
+
     f = File.open("./load.json", 'w')
     f.write('{"Graphs":true, "Cutting":true, "Testing":true, "loading":true}')
     f.close
 
-    Run.writeOutputFile(dataFile)
-  puts "yo"
-      f = File.open("./load.json", 'w')
+    sleep(1)
+    f = File.open("./load.json", 'w')
     f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}')
     f.close
   end
 
-  def self.writeOutputFile(dataFile)
+  def self.writeOutputFile(start_year, period)
     tmp = BackEnd.checkRelated();
+    #tmp =  SQL.parse(2000,2);
     first=true;
     checkedVals = Set.new
     File.open '../Frontend/goodbad.json', 'w' do |file|
@@ -78,48 +80,76 @@ class Run
       tmp.each do |key, value|
         value.each do |station|
           unless first
-
             file.write(",")
           end
           first =false;
           checkedVals.add(station.code);
           if (key == station.code)
-            file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":2}'+"\n")
+            file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":3}'+"\n")
           else
-            file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":1}'+"\n")
+            file.write('{"Longitude":'+station.location.longitude.to_s+', "Latitude":'+station.location.latitude.to_s+', "goodBad":2}'+"\n")
           end
         end
       end
-      BackEnd.parse (dataFile);
-      stationList=BackEnd.getData();
+      # BackEnd.parse (dataFile);
+      #stationList=BackEnd.getData();
+      stationList=SQL.parse(start_year, period)[0];
+      puts stationList.length
       stationList.each do |stations|
-
+        unless checkedVals.include? stations.code
+          file.write(",")
+          file.write('{"Longitude":'+stations.location.longitude.to_s+', "Latitude":'+stations.location.latitude.to_s+', "goodBad":1}'+"\n")
+        end
+      end
+      stationList=SQL.parse(start_year, period)[1];
+      puts stationList.length
+      stationList.each do |stations|
         unless checkedVals.include? stations.code
           file.write(",")
           file.write('{"Longitude":'+stations.location.longitude.to_s+', "Latitude":'+stations.location.latitude.to_s+', "goodBad":0}'+"\n")
         end
-
-
       end
       file.write(' ]}'+"\n")
     end
   end
+
+  def self.futureCheck()
+
+  end
 end
 
-# puts "Setting Tolerances"
-# Edge.setTolerances(1, 5, 10);
-# puts "Quering SQL File"
-# dataFile = 'test.csv';
-# puts "Parsing"
-# BackEnd.setData( SQL.parse(2000,2))
-# #BackEnd.parse (dataFile);
-# puts "Formulating Grid Network"
-# BackEnd.createGrid();
-# puts "Building Graphs"
-# BackEnd.createEdges();
-# puts "Triming Graph"
-# BackEnd.trimEdges();
-# puts "Testing Design"
+
+=begin
+
+puts "Setting Tolerances"
+Edge.setTolerances(10, 10, 10);
+puts "Quering SQL File"
+dataFile = 'test.csv';
+puts "Parsing"
+BackEnd.setData( SQL.parse(2000,2)[0])
+#BackEnd.parse (dataFile);
+
+
+
+puts "Formulating Grid Network"
+BackEnd.createGrid();
+
+
+
+puts "Building Graphs"
+BackEnd.createEdges();
+
+
+
+
+puts "Triming Graph"
+BackEnd.trimEdges();
+puts "Testing Design"
+
+
+
+Run.writeOutputFile(2000,2);
+=end
 
 
 =begin
