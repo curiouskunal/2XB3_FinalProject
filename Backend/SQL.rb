@@ -86,7 +86,7 @@ class SQL
 # the startYear value is 2000. The value will need to be multiplied by 1000
     startYear = input * 10000
 # the tolerance is 3 years. This is the (startYear + period) * 1000 + 9999
-    endYear = (input + period) * 10000 + 9999
+    endYear = (input + period - 1) * 10000 + 9999
     stm = @db.execute "SELECT Id FROM Station"
     for stationID in stm
       # puts stationID[0]
@@ -97,6 +97,7 @@ class SQL
         if (data.length >= 365*period)
           @validStations[stationID[0]] = data
           # puts stationID[0]
+          # puts data.length
         end
       end
     end
@@ -135,4 +136,4 @@ class SQL
   end
 end
 
-# SQL.parse 2000,2
+# SQL.parse 2000, 2
