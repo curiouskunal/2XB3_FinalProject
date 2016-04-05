@@ -76,7 +76,7 @@ function loadStuff() {
     console.log("hi");
 //clear
     d3.selectAll("svg > *").remove();
-    drawMap();
+    // drawMap();
     var query = '{'
         + '"start_year":' + document.getElementById("start_year").value
         + ',"period":' + document.getElementById("period").value
@@ -90,6 +90,7 @@ function loadStuff() {
     xhReq.open("GET", 'http://localhost:8080/query/' + query);
     xhReq.send(null);
     console.log("hii");
+    document.getElementById("msg").innerHTML = " ";
     load();
 
 
@@ -109,7 +110,7 @@ function load() {
             console.log("sup");
             setTimeout(load, 50);
         } else if (!json.Cutting) {
-console.log("sup")
+            console.log("sup")
             document.getElementById("msg").innerHTML = "Building Graphs";
             setTimeout(load, 50);
             increaseProgressBar(30);
@@ -125,11 +126,26 @@ console.log("sup")
             setTimeout(load, 50);
             increaseProgressBar(75);
         } else {
-            document.getElementById("msg").innerHTML = null;
+            
             increaseProgressBar(100);
-            test();
+
+            setTimeout(finalTing, 1000)
+
+            // test();
         }
     });
+}
+
+function finalTing(){
+    document.getElementById("msg").innerHTML = null;
+    document.getElementById("label").innerHTML = null
+    document.getElementById("myBar").innerHTML = null
+    document.getElementById("myProgress").innerHTML = null
+
+
+    drawMap();
+
+    setTimeout(test, 50);
 }
 
 
