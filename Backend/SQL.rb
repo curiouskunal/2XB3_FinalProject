@@ -88,16 +88,15 @@ class SQL
 # the tolerance is 3 years. This is the (startYear + period) * 1000 + 9999
     endYear = (input + period - 1) * 10000 + 9999
     stm = @db.execute "SELECT Id FROM Station"
+    previous = Array.new
     for stationID in stm
       # puts stationID[0]
       data = @db.execute "SELECT Id FROM #{stationID[0]} WHERE Precipitation!=-9999 AND Temp_Max!=-9999 AND Temp_Min!=-9999 AND Id BETWEEN #{startYear} AND #{endYear}"
       # puts data
       if (data.length != 0)
         # puts stationID[0] + " at "
-        if (data.length >= 365*period)
+        if (data.length >= self.daysBetween(input, period-1))
           @validStations[stationID[0]] = data
-          # puts stationID[0]
-          # puts data.length
         end
       end
     end
@@ -134,6 +133,22 @@ class SQL
     # end
     return stationList
   end
-end
 
-# SQL.parse 2000, 2
+  def self.daysBetween startYear, period
+    days = 0
+    i = 0
+    for i in 0..period
+      if startYear%4 == 0
+        if startYear%100 == 0
+          if startYear%400 == 0
+            days+=1
+          end
+        end
+      end
+      days+=365
+      startYear+=1
+    end
+    return days.to_i
+  end
+end
+SQL.parse 2000, 2
