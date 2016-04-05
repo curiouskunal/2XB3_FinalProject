@@ -1,5 +1,4 @@
-{
-  "STATIONS":[
+{"STATIONS":[
 {"Longitude":-115.57861, "Latitude":32.83417, "goodBad":2}
 ,{"Longitude":-115.5666, "Latitude":32.8488, "goodBad":1}
 ,{"Longitude":-119.61, "Latitude":38.28, "goodBad":2}
@@ -142,5 +141,4 @@
 ,{"Longitude":-120.0936, "Latitude":39.3886, "goodBad":0}
 ,{"Longitude":-116.91583, "Latitude":33.0375, "goodBad":0}
 ,{"Longitude":-117.34944, "Latitude":33.21944, "goodBad":0}
- ]
-}
+ ]}
