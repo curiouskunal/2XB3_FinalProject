@@ -74,7 +74,7 @@ class BackEnd
   def self.trimEdges
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      unless edge.is_related?#or edge.cross @graphEdges
+      unless !edge.is_related?#or edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
         end
@@ -163,10 +163,12 @@ class BackEnd
     adj
   end
 
-  def self.checkRelated t_max, t_min, prcp
+  def self.checkRelated
     graph = Hash.new
+    puts @graphNodes
     @graphNodes.each do |node|
       graph[node.code] = Set.new.add node
+      puts graph[node.code].size
     end
     @graphEdges.each do |edge|
       a, b = edge.nodes

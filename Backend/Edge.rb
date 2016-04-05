@@ -13,7 +13,7 @@ class Edge
     @s2=node2
 
     #pre-calculate all values
-    @canPredict_ = (Edge.checkTempTolerance(@s1.weather, @s2.weather) and Edge.checkRainTolerance(@s1.weather, @s2.weather))
+    @canPredict = (Edge.checkTempTolerance(@s1.weather, @s2.weather) or Edge.checkRainTolerance(@s1.weather, @s2.weather))
     @length = Edge.distanceCalc(@s1,@s2)
   end
 
@@ -65,7 +65,7 @@ class Edge
   end
 
   def self.is_related?(s1,s2)
-    return ((checkTempTolerance(s1.weather, s2.weather) < getLength(s1, s2)) or (checkRainTolerance(s1.weather, s2.weather) < getLength(s1, s2)))
+    return (checkTempTolerance(s1.weather, s2.weather) or checkRainTolerance(s1.weather, s2.weather))
   end
 
   def nodes()
