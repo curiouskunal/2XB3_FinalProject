@@ -184,6 +184,10 @@ class BackEnd
     end
     graph
   end
+
+  def self.getEdges()
+    return @graphEdges
+  end
     
   def self.run
     dataFile = 'test3.csv'
@@ -213,4 +217,4 @@ class BackEnd
   end
 end
 
-BackEnd.run
+#BackEnd.run

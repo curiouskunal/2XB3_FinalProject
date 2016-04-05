@@ -13,8 +13,8 @@ class Edge
     @s2=node2
 
     #pre-calculate all values
-    @canPredict_ = (Edge.checkTempTolerance(@s1.weather, @s2.weather) and checkRainTolerance(@s1.weather, @s2.weather))
-    @length = distanceCalc(@s1,@s2)
+    @canPredict_ = (Edge.checkTempTolerance(@s1.weather, @s2.weather) and Edge.checkRainTolerance(@s1.weather, @s2.weather))
+    @length = Edge.distanceCalc(@s1,@s2)
   end
 
   def self.setTolerances(rain,temp,days)
@@ -35,7 +35,7 @@ class Edge
     tmpVals=0.0;
     leng=getLength(val1,val2)
     for i in 0..(leng-1)
-      if (withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
+      if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
         tmpVals=tmpVals+1
       end
     end
@@ -46,7 +46,7 @@ class Edge
     tmpVals=0.0;
     leng=getLength(val1,val2)
     for i in 0..(leng-1)
-      if (withinTolerance(val1[i].precipitation, val2[i].precipitation,  @percipTolerance))
+      if (Edge.withinTolerance(val1[i].precipitation, val2[i].precipitation,  @percipTolerance))
         tmpVals=tmpVals+1
       end
     end

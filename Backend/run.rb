@@ -14,7 +14,12 @@ class Run
 		puts "accuracy: #{accuracy}"
 
 		Edge.setTolerances(20,20,20);
-
+    dataFile = 'test.csv';
+    BackEnd.parse (dataFile);
+    BackEnd.createGrid();
+    BackEnd.createEdges();
+    BackEnd.trimEdges();
+    puts BackEnd.graphEdges;
 
 
 		f = File.open("../Backend/load.json", 'w')
@@ -43,3 +48,9 @@ class Run
 end
 
 Edge.setTolerances(20,20,20);
+dataFile = 'test.csv';
+BackEnd.parse (dataFile);
+BackEnd.createGrid();
+BackEnd.createEdges();
+BackEnd.trimEdges();
+puts BackEnd.getEdges();
