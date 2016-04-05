@@ -77,6 +77,13 @@ class BackEnd
       unless !edge.is_related?#or edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
+          a, b = edge.nodes
+          unless @graphNodes.include? a
+            @graphNodes.add a
+          end
+          unless @graphNodes.include? b
+            @graphNodes.add b
+          end
         end
       end
     end
@@ -165,21 +172,26 @@ class BackEnd
 
   def self.checkRelated
     graph = Hash.new
-    puts @graphNodes
     @graphNodes.each do |node|
-      graph[node.code] = Set.new.add node
-      puts graph[node.code].size
+      graph[node.code] = Array.new
+      graph[node.code].push node
     end
     @graphEdges.each do |edge|
       a, b = edge.nodes
-      if graph[a.code].size == 1
+      if graph[a.code] == nil
+        next
+      end
+      if graph[b.code] == nil
+        next
+      end
+      if graph[a.code].length == 1
         if Edge.is_related? a, b
-          graph[b.code].add graph[a.code][0]
+          graph[b.code].push graph[a.code][0]
           graph.delete a.code
         end
-      elsif graph[b.code].size == 1
+      elsif graph[b.code].length == 1
         if Edge.is_related? a, b
-          graph[a.code].add graph[b.code][0]
+          graph[a.code].push graph[b.code][0]
           graph.delete b.code
         end
       end
