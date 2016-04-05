@@ -4,5 +4,5 @@ sqlite3.exe
 Frontend/node_modules
 Backend/California.db
 *.log
-edges.txt
-data.txt
+Backend/edges.txt
+py/data.txt
