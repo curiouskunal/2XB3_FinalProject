@@ -6,3 +6,5 @@ Backend/California.db
 *.log
 Backend/edges.txt
 py/data.txt
+
+Frontend/goodbad.json
