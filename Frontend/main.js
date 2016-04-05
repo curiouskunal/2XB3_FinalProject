@@ -269,5 +269,7 @@ function updatePeriod() {
     document.getElementById("period").innerHTML = out;
     if (curPeriod <= period) {
         document.getElementById("period").value = curPeriod;
+    }else{
+        document.getElementById("period").value = 1;
     }
 }
