@@ -135,7 +135,7 @@ class BackEnd
   def self.makeEdges curr, nodes
     edges = Set.new
     nodes.each do |node|
-      edges.add (Edge.new curr, node, 0)
+      edges.add (Edge.new curr, node)
     end
     edges
   end

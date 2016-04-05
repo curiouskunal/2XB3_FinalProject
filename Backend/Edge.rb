@@ -4,86 +4,72 @@ require 'set'
 #the percent days in tolerance for rain and temperature aswell
 #as calculate the length of the edge
 class Edge
-  percipTolerance;
-  tempTolerance;
-  daysAccuracy;
+  @percipTolerance=0;
+  @tempTolerance=0;
+  @daysAccuracy=0;
 
   def initialize(node1, node2)
     @s1=node1
     @s2=node2
 
     #pre-calculate all values
-    @tempDays = PercentTempDays(@s1.weather,@s2.weather)
-    @rainDays = PercentRainDays(@s1.weather,@s2.weather)
-    @withinTolerance_ = (@tempDays < @s1.weather.length) or (@rainDays < @s1.weather.length)
+    @canPredict_ = (Edge.checkTempTolerance(@s1.weather, @s2.weather) and checkRainTolerance(@s1.weather, @s2.weather))
     @length = distanceCalc(@s1,@s2)
   end
 
-  def self.setTolerances(){
-
-  }
+  def self.setTolerances(rain,temp,days)
+    @percipTolerance = rain;
+    @tempTolerance = temp;
+    @daysAccuracy = days;
   end
 
-  def checkTolerance
-    return @withinTolerance
-  end
-
-  def PercentTempDays(val1, val2)
-    tmpVals=0.0;
+  def self.getLength(val1,val2)
     leng = val1.length;
     if (val2.length<leng)
-      leng = val2.length
+      leng = val2.length;
     end
-    for i in 0..(leng-1)
+    return leng;
+  end
 
-      if (withinTolerance(val1[i].t_max, val2[i].t_max, tolerance) && withinTolerance(val1[i].t_min, val2[i].t_min, tolerance))
+  def self.checkTempTolerance(val1, val2)
+    tmpVals=0.0;
+    leng=getLength(val1,val2)
+    for i in 0..(leng-1)
+      if (withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
         tmpVals=tmpVals+1
       end
     end
-    return tmpVals/val1.length
+    return (tmpVals+ @daysAccuracy)>=leng
   end
 
-  def PercentRainDays(val1, val2)
+  def self.checkRainTolerance(val1, val2)
     tmpVals=0.0;
-    leng = val1.length;
-    if (val2.length<leng)
-      leng = val2.length
-    end
+    leng=getLength(val1,val2)
     for i in 0..(leng-1)
-      if (withinTolerance(val1[i].precipitation, val2[i].precipitation, tolerance))
+      if (withinTolerance(val1[i].precipitation, val2[i].precipitation,  @percipTolerance))
         tmpVals=tmpVals+1
       end
     end
-    return tmpVals/val1.length
+    return (tmpVals+  @daysAccuracy)>=leng
   end
 
-  def withinTolerance(val1, val2, tolerance)
+  def self.withinTolerance(val1, val2, tolerance)
     if (val1>val2)
       return (val1-val2)<=tolerance
     end
     return (val2-val1)<=tolerance
   end
 
+  def is_related?()
+    return @canPredict
+  end
+
+  def self.is_related?(s1,s2)
+    return ((checkTempTolerance(s1.weather, s2.weather) < getLength(s1, s2)) or (checkRainTolerance(s1.weather, s2.weather) < getLength(s1, s2)))
+  end
+
   def nodes()
     return @s1, @s2
-  end
-
-  def getWeather()
-    return @tempDays, @rainDays
-  end
-
-  def distanceCalc(s1, s2)
-    radiusEarth=6371000;
-    x1 = s1.location.longitude*(Math::PI/180.0)
-    x2 = s2.location.longitude*(Math::PI/180.0)
-    y1 = s1.location.latitude*(Math::PI/180.0)
-    y2 = s2.location.latitude*(Math::PI/180.0)
-    deltaX = x1-x2
-    deltaY=y1-y2
-    a = Math.sin(deltaX/2.0) * Math.sin(deltaX/2.0) + Math.cos(x1) * Math.cos(x2) * Math.sin(deltaY/2.0)* Math.sin(deltaY/2.0)
-    circumfrence = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a))
-
-    return radiusEarth * circumfrence
   end
 
   def self.distanceCalc(s1, s2)
@@ -108,8 +94,8 @@ class Edge
     return @length>=other.distance()
   end
 
+
   def cross(other)
-    return false
     if other.is_a? Edge
       #Other
       oa, ob = other.nodes
@@ -166,7 +152,7 @@ class Edge
   end
 
   def reverse
-    Edge.new @s2, @s1, 0
+    return Edge.new @s2, @s1
   end
 
   def eql? other

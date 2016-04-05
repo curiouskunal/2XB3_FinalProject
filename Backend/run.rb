@@ -1,4 +1,5 @@
-require 'backend'
+require './backend'
+require './Edge'
 
 #!/usr/bin/env ruby
 class Run
@@ -13,10 +14,7 @@ class Run
 		puts "accuracy: #{accuracy}"
 
 		Edge.setTolerances(20,20,20);
-		Backend.parse (dataFile);
-		BackEnd.createGrid();
-		BackEnd.createEdges();
-		BackEnd.trimEdges();
+
 
 
 		f = File.open("../Backend/load.json", 'w')
@@ -42,5 +40,6 @@ class Run
     f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}' )
     f.close
 	end
-
 end
+
+Edge.setTolerances(20,20,20);
