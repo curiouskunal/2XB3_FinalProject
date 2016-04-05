@@ -13,49 +13,49 @@ class Run
 		puts "percip: #{percip}"
 		puts "accuracy: #{accuracy}"
 
-		Edge.setTolerances(20,20,20);
-    dataFile = 'test.csv';
-    BackEnd.parse (dataFile);
-    BackEnd.createGrid();
-    BackEnd.createEdges();
-    BackEnd.trimEdges();
-    puts BackEnd.graphEdges;
+    # Edge.setTolerances(20,20,20);
+    # dataFile = 'test.csv';
+    # BackEnd.parse (dataFile);
+    # BackEnd.createGrid();
+    # BackEnd.createEdges();
+    # BackEnd.trimEdges();
+    # puts BackEnd.graphEdges;
 
 
-		f = File.open("../Backend/load.json", 'w')
+		f = File.open("./load.json", 'w')
 		f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}' )
 		f.close
-		f = File.open("../Backend/load.json", 'w')
+		f = File.open("./load.json", 'w')
 		f.write('{"Graphs":true, "Cutting":false, "Testing":false, "loading":false}' )
 		f.close
 		sleep(1)
-		f = File.open("../Backend/load.json", 'w')
+		f = File.open("./load.json", 'w')
 		f.write('{"Graphs":true, "Cutting":true, "Testing":false, "loading":false}' )
 		f.close
 		sleep(1)
-		f = File.open("../Backend/load.json", 'w')
+		f = File.open("./load.json", 'w')
 		f.write('{"Graphs":true, "Cutting":true, "Testing":true, "loading":false}')
 		f.close
 		sleep(1)
-		f = File.open("../Backend/load.json", 'w')
+		f = File.open("./load.json", 'w')
 		f.write('{"Graphs":true, "Cutting":true, "Testing":true, "loading":true}' )
 		f.close
     sleep(1)
-    f = File.open("../Backend/load.json", 'w')
+    f = File.open("./load.json", 'w')
     f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}' )
     f.close
 	end
 end
-puts "hi"
-Edge.setTolerances(20,20,20);
-dataFile = 'test.csv';
-BackEnd.parse (dataFile);
-BackEnd.createGrid();
-BackEnd.createEdges();
-BackEnd.trimEdges();
-tmp = BackEnd.getEdges();
-File.open 'edges.txt', 'w' do |file|
-  tmp.each do |edge|
-    file.write (edge.to_s + "\n")
-  end
-end
+# puts "hi"
+# Edge.setTolerances(20,20,20);
+# dataFile = 'test.csv';
+# BackEnd.parse (dataFile);
+# BackEnd.createGrid();
+# BackEnd.createEdges();
+# BackEnd.trimEdges();
+# tmp = BackEnd.getEdges();
+# File.open 'edges.txt', 'w' do |file|
+#   tmp.each do |edge|
+#     file.write (edge.to_s + "\n")
+#   end
+# end

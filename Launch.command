@@ -19,4 +19,4 @@ echo ""
 npm install
 npm start
 
-osascript -e "tell application \"System Events\" to keystroke \"w\" using command down"
+#osascript -e "tell application \"System Events\" to keystroke \"w\" using command down"

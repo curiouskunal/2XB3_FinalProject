@@ -28,7 +28,7 @@ end
 
 
 get '/terminate' do
-	body "I'll be back..."
+	#body "I'll be back..."
 	# maybe clean things up here...
 	logger.info "Received terminate request!"
 	Thread.new { sleep 1; Process.kill 'INT', Process.pid }

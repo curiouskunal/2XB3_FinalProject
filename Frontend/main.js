@@ -196,6 +196,24 @@ function drawMap() {
         .attr("transform", "translate (100,100");
 */
 
+function CheckAndload(){
+    var in_start_yr = document.getElementById("start_year").value;
+    var in_period = document.getElementById("period").value;
+    var el = document.getElementById("msg");
+
+
+    if (2016 - in_start_yr >= in_period){
+        console.log("input parameters valid.");
+        el.style.color = "green";
+        document.getElementById("msg").innerHTML = " ";
+        loadStuff()
+    }else{
+        console.log("Error: input parameters not valid.");
+        el.style.color = "red";
+        document.getElementById("msg").innerHTML = "*Error: Input parameters not valid   Please Check Start Year and Period Conditions*";
+    }    
+}
+
 function test(){
     console.log("sup");
     d3.json("goodbad.json", function (error, json) {
