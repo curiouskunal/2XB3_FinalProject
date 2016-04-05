@@ -5,7 +5,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
-var width = 0;
+
 
 
 app.on('ready', function () {
@@ -39,6 +39,7 @@ var projection;
 var path;
 
 function initialize(x) {
+    document.getElementById("msg").innerHTML = "Waiting for Query";
     d3 = x;
     //Make an SVG Container
     svgContainer = d3.select("#map")
@@ -104,32 +105,31 @@ function check(x) {
 
 }
 function load() {
-    // console.log("sup");
     d3.json("../Backend/load.json", function (error, json) {
         if (!json.Graphs) {
-            console.log("sup");
+
             setTimeout(load, 50);
         } else if (!json.Cutting) {
-            console.log("sup")
-            document.getElementById("msg").innerHTML = "Building Graphs";
+
+            document.getElementById("msg").innerHTML = "Parsing Data";
             setTimeout(load, 50);
             increaseProgressBar(30);
         } else if (!json.Testing) {
-            console.log("sup");
-            document.getElementById("msg").innerHTML = "Cutting Stations";
+
+            document.getElementById("msg").innerHTML = "Formulating Grid Network";
             setTimeout(load, 50);
             increaseProgressBar(50);
         } else if (!json.loading) {
-            console.log("sup")
-            document.getElementById("msg").innerHTML = "testing";
-            console.log("fail");
+  
+            document.getElementById("msg").innerHTML = "Prediction Verification";
+
             setTimeout(load, 50);
             increaseProgressBar(75);
         } else {
             
             increaseProgressBar(100);
 
-            setTimeout(finalTing, 1000)
+            setTimeout(finalTing, 900);
 
             // test();
         }
@@ -140,12 +140,12 @@ function finalTing(){
     document.getElementById("msg").innerHTML = null;
     document.getElementById("label").innerHTML = null
     document.getElementById("myBar").innerHTML = null
-    document.getElementById("myProgress").innerHTML = null
+    document.getElementById("wrapper").remove();//.innerHTML = null
 
 
     drawMap();
 
-    setTimeout(test, 50);
+    setTimeout(test, 1000);
 }
 
 
@@ -175,83 +175,38 @@ function drawMap() {
                 }
             })
             .attr("d", path);
-// put boarder around states
-        /*for (var i=0; i<json.)
-         svgContainer.append("path")
-         .datum(function(a, b) { return a !== b; }))
-         .attr("class", "mesh")
-         .attr("d", path);*/
-
-        // add circles to svg
-        /*svgContainer
-         .append("circle")
-         .attr("cx",  projection(aa)[0])
-         .attr("cy", projection(aa)[1])
-         .attr("r", "8px")
-         .attr("fill", "red");*/
 
     });
 }
 
 
-/* tmp = ["20MRes_ARI.json", "20MRes_IDA.json", "20MRes_ORE.json", "20MRes_NEV.json", "20MRes_UTA.json", "20MRes_COL.json", "20MRes_NEW.json", "20MRes_WYO.json"];
- for (var i in tmp) {
- console.log(tmp[i]);
- d3.json("./geoJSON/"+tmp[i], function (error, json) {
- svgContainer.append("g")
- .selectAll("path")
- .data(json.features)
- .enter()
- .append("path")
- .attr("d", d3.geo.path())
- .attr("fill", "#d3d3d3")
- .attr("transform", "translate (80,-360) scale (2.8)")
- ;
-
- });
- }
- d3.json("./geoJSON/20MRes_test.json", function (error, json) {
- svgContainer.append("g")
- .selectAll("path")
- .data(json.features)
- .enter()
- .append("path")
- .attr("d", d3.geo.path())
- .attr("fill", "#666666")
- // .attr("transform", "translate (80,-360) scale (2.8)")
- ;
-
- });
-
- var bottomDisp = -360;//585;
- var leftDisp = 80;//230;
- var scaleY = 1;//545 / 10;
- var scaleX = 1;//340 / 11;
- var radius = 20;
- svgContainer.append("circle")
- .attr("cx", 80)
- .attr("cy", 100)
- .attr("r", radius)
- .attr("fill", "#000000")
- .attr("transform", "translate (100,100");
- */
-
+var ran=false;
 function CheckAndload() {
+    if (ran){
+        setTimeout(window.location.reload(), 100)
+    }else{
+    ran=true;
+    var width = 0; 
     var in_start_yr = document.getElementById("start_year").value;
     var in_period = document.getElementById("period").value;
     var el = document.getElementById("msg");
 
     if (2014 - in_start_yr >= in_period) {
         console.log("input parameters valid.");
-        el.style.color = "green";
+        el.style.color = "black";
         document.getElementById("msg").innerHTML = " ";
         document.getElementById("submitButton").disabled = true;
+        document.getElementById("start_year").disabled = true;
+        document.getElementById("period").disabled = true;
+        document.getElementById("temp").disabled = true;
+        document.getElementById("percip").disabled = true;
+        document.getElementById("accuracy").disabled = true;
         loadStuff();
     } else {
         console.log("Error: input parameters not valid.");
         el.style.color = "red";
         document.getElementById("msg").innerHTML = "*Error: Input parameters not valid   Please Check Start Year and Period Conditions*";
-    }
+    }}
 }
 
 function test() {
@@ -289,7 +244,9 @@ function test() {
         }
     });
 //svgContainer.sort(function(a,b){console.log(a);console.log(b);return d3.ascending(a.value, b.value);});
+    document.getElementById("submitButton").innerHTML = "Reset";
     document.getElementById("submitButton").disabled = false;
+
 }
 
 

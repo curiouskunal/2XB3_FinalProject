@@ -30,6 +30,10 @@ body{ height: 100%; overflow:hidden; font-family: monospace}
 #msg {
 
 	line-height: 200px;
-	font-size: 100px;
+	font-size: 50px;
 
+}
+
+#wrapper{
+	width: 100%;
 }
