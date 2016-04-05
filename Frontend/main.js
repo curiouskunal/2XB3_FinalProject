@@ -34,7 +34,7 @@ var width = 950,
 var projection;
 
 // create path variable
-var path ;
+var path;
 
 function initialize(x) {
     d3 = x;
@@ -48,7 +48,6 @@ function initialize(x) {
         .attr("height", 800);
 
     projection = d3.geo.mercator();
-
 
 
     // set projection parameters
@@ -83,7 +82,7 @@ function loadStuff() {
 
 }
 
-function check(x){
+function check(x) {
     if (!x) {
         return 0;
     }
@@ -133,14 +132,20 @@ function drawMap() {
             .data(states).enter()
             .append("path")
             .attr("class", "feature")
-            .style("fill", function(d){if (d.properties.NAME=="California"){return "#666666"}else{return "#d3d3d3"}})
+            .style("fill", function (d) {
+                if (d.properties.NAME == "California") {
+                    return "#666666"
+                } else {
+                    return "#d3d3d3"
+                }
+            })
             .attr("d", path);
 // put boarder around states
-/*for (var i=0; i<json.)
-        svgContainer.append("path")
-            .datum(function(a, b) { return a !== b; }))
-            .attr("class", "mesh")
-            .attr("d", path);*/
+        /*for (var i=0; i<json.)
+         svgContainer.append("path")
+         .datum(function(a, b) { return a !== b; }))
+         .attr("class", "mesh")
+         .attr("d", path);*/
 
         // add circles to svg
         /*svgContainer
@@ -154,67 +159,67 @@ function drawMap() {
 }
 
 
-   /* tmp = ["20MRes_ARI.json", "20MRes_IDA.json", "20MRes_ORE.json", "20MRes_NEV.json", "20MRes_UTA.json", "20MRes_COL.json", "20MRes_NEW.json", "20MRes_WYO.json"];
-    for (var i in tmp) {
-        console.log(tmp[i]);
-        d3.json("./geoJSON/"+tmp[i], function (error, json) {
-            svgContainer.append("g")
-                .selectAll("path")
-                .data(json.features)
-                .enter()
-                .append("path")
-                .attr("d", d3.geo.path())
-                .attr("fill", "#d3d3d3")
-                .attr("transform", "translate (80,-360) scale (2.8)")
-            ;
+/* tmp = ["20MRes_ARI.json", "20MRes_IDA.json", "20MRes_ORE.json", "20MRes_NEV.json", "20MRes_UTA.json", "20MRes_COL.json", "20MRes_NEW.json", "20MRes_WYO.json"];
+ for (var i in tmp) {
+ console.log(tmp[i]);
+ d3.json("./geoJSON/"+tmp[i], function (error, json) {
+ svgContainer.append("g")
+ .selectAll("path")
+ .data(json.features)
+ .enter()
+ .append("path")
+ .attr("d", d3.geo.path())
+ .attr("fill", "#d3d3d3")
+ .attr("transform", "translate (80,-360) scale (2.8)")
+ ;
 
-        });
-    }
-    d3.json("./geoJSON/20MRes_test.json", function (error, json) {
-        svgContainer.append("g")
-            .selectAll("path")
-            .data(json.features)
-            .enter()
-            .append("path")
-            .attr("d", d3.geo.path())
-            .attr("fill", "#666666")
-           // .attr("transform", "translate (80,-360) scale (2.8)")
-        ;
+ });
+ }
+ d3.json("./geoJSON/20MRes_test.json", function (error, json) {
+ svgContainer.append("g")
+ .selectAll("path")
+ .data(json.features)
+ .enter()
+ .append("path")
+ .attr("d", d3.geo.path())
+ .attr("fill", "#666666")
+ // .attr("transform", "translate (80,-360) scale (2.8)")
+ ;
 
-    });
+ });
 
-    var bottomDisp = -360;//585;
-    var leftDisp = 80;//230;
-    var scaleY = 1;//545 / 10;
-    var scaleX = 1;//340 / 11;
-    var radius = 20;
-    svgContainer.append("circle")
-        .attr("cx", 80)
-        .attr("cy", 100)
-        .attr("r", radius)
-        .attr("fill", "#000000")
-        .attr("transform", "translate (100,100");
-*/
+ var bottomDisp = -360;//585;
+ var leftDisp = 80;//230;
+ var scaleY = 1;//545 / 10;
+ var scaleX = 1;//340 / 11;
+ var radius = 20;
+ svgContainer.append("circle")
+ .attr("cx", 80)
+ .attr("cy", 100)
+ .attr("r", radius)
+ .attr("fill", "#000000")
+ .attr("transform", "translate (100,100");
+ */
 
-function CheckAndload(){
+function CheckAndload() {
     var in_start_yr = document.getElementById("start_year").value;
     var in_period = document.getElementById("period").value;
     var el = document.getElementById("msg");
 
-    if (2014 - in_start_yr >= in_period){
+    if (2014 - in_start_yr >= in_period) {
         console.log("input parameters valid.");
         el.style.color = "green";
         document.getElementById("msg").innerHTML = " ";
-        document.getElementById("submitButton").disabled = true; 
+        document.getElementById("submitButton").disabled = true;
         loadStuff();
-    }else{
+    } else {
         console.log("Error: input parameters not valid.");
         el.style.color = "red";
         document.getElementById("msg").innerHTML = "*Error: Input parameters not valid   Please Check Start Year and Period Conditions*";
-    }    
+    }
 }
 
-function test(){
+function test() {
     console.log("sup");
     d3.json("goodbad.json", function (error, json) {
         for (var
@@ -225,40 +230,44 @@ function test(){
             } else {
                 colour = "#FF2222";
             }
-           /* svgContainer.append("circle")
-                .attr("cx", (json.STATIONS[i].Longitude) * scaleX + leftDisp)
-                .attr("cy", bottomDisp+((json.STATIONS[i].Latitude) * scaleY))
-                .attr("r", radius).attr("fill", colour);*/
+            /* svgContainer.append("circle")
+             .attr("cx", (json.STATIONS[i].Longitude) * scaleX + leftDisp)
+             .attr("cy", bottomDisp+((json.STATIONS[i].Latitude) * scaleY))
+             .attr("r", radius).attr("fill", colour);*/
             // add circles to svg
             /*svgContainer
-                .append("circle")
-                .attr("cx", projection([json.STATIONS[i].Longitude,json.STATIONS[i].Latitude])[0])
-                .attr("cy", projection([json.STATIONS[i].Longitude,json.STATIONS[i].Latitude])[1])
-                .attr("r", "8px")
-                .attr("fill", "red");*/
+             .append("circle")
+             .attr("cx", projection([json.STATIONS[i].Longitude,json.STATIONS[i].Latitude])[0])
+             .attr("cy", projection([json.STATIONS[i].Longitude,json.STATIONS[i].Latitude])[1])
+             .attr("r", "8px")
+             .attr("fill", "red");*/
             aa = [json.STATIONS[i].Longitude, json.STATIONS[i].Latitude];
             svgContainer
                 .append("circle")
-                .attr("cx",  projection(aa)[0])
+                .attr("cx", projection(aa)[0])
                 .attr("cy", projection(aa)[1])
                 .attr("r", "2px")
                 .attr("fill", colour);
         }
     });
 //svgContainer.sort(function(a,b){console.log(a);console.log(b);return d3.ascending(a.value, b.value);});
-document.getElementById("submitButton").disabled = false;
+    document.getElementById("submitButton").disabled = false;
 }
 
 
-function updatePeriod(){
+function updatePeriod() {
     var in_start_yr = document.getElementById("start_year").value;
-    var period = 2014 - in_start_yr+1;
-    var out ="";
-        for (var i=1;i<period;i++){
+    var curPeriod = document.getElementById("period").value;
+    var period = 2014 - in_start_yr + 1;
+    var out = "";
+    for (var i = 1; i < period; i++) {
 
-            out+="<option value="+i;
-            out+=">"+i;
-            out+=" Year<"+"/option>";
-        }
-    document.getElementById("period").innerHTML=out;
+        out += "<option value=" + i;
+        out += ">" + i;
+        out += " Year<" + "/option>";
+    }
+    document.getElementById("period").innerHTML = out;
+    if (curPeriod <= period) {
+        document.getElementById("period").value = curPeriod;
+    }
 }
