@@ -7,6 +7,7 @@ require_relative 'weather.rb'
 class SQL
   @db = SQLite3::Database.open "California.db"
   @validStations = Hash.new
+  @invalidStation = Hash.new
 
 
   def self.makeSQL
@@ -90,40 +91,43 @@ class SQL
     stm = @db.execute "SELECT Id FROM Station"
     previous = Array.new
     for stationID in stm
-      # puts stationID[0]
       data = @db.execute "SELECT Id FROM #{stationID[0]} WHERE Precipitation!=-9999 AND Temp_Max!=-9999 AND Temp_Min!=-9999 AND Id BETWEEN #{startYear} AND #{endYear}"
-      # puts data
       if (data.length != 0)
-        # puts stationID[0] + " at "
         if (data.length >= self.daysBetween(input, period-1))
           @validStations[stationID[0]] = data
         end
+        @invalidStation[stationID[0]] = data
       end
     end
   end
 
   def self.parse start, period
     self.getValid start, period
-    # puts 'Got ' + @validStations.size.to_s + ' valid station'
     stationList = Array.new
+    badStationList = Array.new
 
     ids = @db.execute "SELECT Id FROM Station ORDER BY Id"
     stationInfo = @db.execute "SELECT * FROM Station ORDER BY Id"
 
     i = 0
     for stationID in ids
-      # puts stationID[0].to_s + " and " + stationInfo[i][0].to_s + " at " + i.to_s
-      if @validStations[stationID[0]] != nil
+      if @invalidStation[stationID[0]] != nil
         currentStation = Station.new stationInfo[i][0], stationInfo[i][1], stationInfo[i][4], stationInfo[i][2], stationInfo[i][3]
-        for date in @validStations[stationID[0]]
-          data = @db.execute "SELECT * FROM #{stationID[0]} WHERE Id = ?", date
-          # puts "Station " + stationID[0].to_s + " has data "
-          # puts data
-          currentStation.add_weather Weather.new data[0][0].to_s, data[0][1].to_s, data[0][2].to_s, data[0][3].to_s
+        if @validStations[stationID[0]] != nil
+          for date in @validStations[stationID[0]]
+            data = @db.execute "SELECT * FROM #{stationID[0]} WHERE Id = ?", date
+            currentStation.add_weather Weather.new data[0][0].to_s, data[0][1].to_s, data[0][2].to_s, data[0][3].to_s
+          end
+          stationList.push currentStation
+        else
+          for date in @invalidStation[stationID[0]]
+            data = @db.execute "SELECT * FROM #{stationID[0]} WHERE Id = ?", date
+            currentStation.add_weather Weather.new data[0][0].to_s, data[0][1].to_s, data[0][2].to_s, data[0][3].to_s
+          end
+          badStationList.push currentStation
         end
-        # puts currentStation.code
-        stationList.push currentStation
       end
+
       i += 1
     end
 
@@ -136,7 +140,10 @@ class SQL
     #   end
     #   puts '-----------------------------------------------'
     # end
-    return stationList
+
+    # puts stationList.length
+    # puts badStationList.length
+    return stationList, badStationList
   end
 
   def self.daysBetween startYear, period
