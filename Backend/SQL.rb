@@ -129,6 +129,11 @@ class SQL
 
     # for sta in stationList
     #   puts sta.code
+    #   for shit in sta.weather
+    #     if sta.code == 'USW00093227' or sta.code == 'USW00023272'
+    #       puts shit.date.to_s + ' has max temp ' + shit.t_max.to_s + ' has min temp ' + shit.t_min.to_s
+    #     end
+    #   end
     #   puts '-----------------------------------------------'
     # end
     return stationList
@@ -151,4 +156,4 @@ class SQL
     return days.to_i
   end
 end
-SQL.parse 2000, 2
+# SQL.parse 2000, 2
