@@ -162,5 +162,15 @@ class SQL
     end
     return days.to_i
   end
+
+  def self.editTable
+    stm = @db.execute "Select Id FROM Station WHERE Id like 'USW00093117'"
+    # print stm
+    for i in stm
+      puts i[0]
+      @db.execute "DROP TABLE #{i[0]}"
+      @db.execute "DELETE FROM Station WHERE Id=?",i[0]
+    end
+  end
 end
-# SQL.parse 2000, 2
+SQL.editTable
