@@ -1,22 +1,14 @@
 #!/bin/bash
-echo "initializing Weather Station Analizer"
-echo ""
-echo ""
 
+# launch commands script for Weather Station Analyzer
+
+# get current directory
 here="`dirname \"$0\"`"
+# set current directory to frontend 
 cd "$here" || exit 1
 cd ./Frontend
 
-echo ""
-echo ""
+echo "Starting Weather Station Analizer"
 
-pwd
-
-
-echo ""
-echo ""
-
-npm install
+# starting program
 npm start
-
-#osascript -e "tell application \"System Events\" to keystroke \"w\" using command down"
