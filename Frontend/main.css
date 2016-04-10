@@ -1,7 +1,9 @@
+/*no white borders*/
 html{ height: 100%}
+/*no white borders, do not allow scrolling*/
 body{ height: 100%; overflow:hidden; font-family: monospace}
 
-/*Colours*/
+/*Background Colours*/
 .bg1{background-color:  #3E72B3}
 .bg2{background-color:  #D5F9FF}
 
@@ -28,7 +30,6 @@ body{ height: 100%; overflow:hidden; font-family: monospace}
 }
 
 #msg {
-
 	line-height: 200px;
 	font-size: 50px;
 
