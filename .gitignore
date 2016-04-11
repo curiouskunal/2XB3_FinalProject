@@ -6,4 +6,5 @@ Backend/California.db
 *.log
 Backend/edges.txt
 Frontend/goodbad.json
-Frontend/load.jsonn
+Frontend/load.json
+Backend/load.json

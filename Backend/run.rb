@@ -13,6 +13,8 @@ class Run
     puts "temp: #{temp}"
     puts "percip: #{percip}"
     puts "accuracy: #{accuracy}"
+    a = Time.new()
+    puts  a.to_f
 
     # Edge.setTolerances(20,20,20);
     # dataFile = 'test.csv';
@@ -72,6 +74,9 @@ class Run
     f = File.open("./load.json", 'w')
     f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}')
     f.close
+    puts"------------------"
+    puts (Time.new-a).to_f;
+    puts"------------------"
   end
 
   def self.writeOutputFile(start_year, period)

@@ -1,19 +1,27 @@
 require './station'
 require 'set'
-#Edge takes in two stations and tolerance and will calculate
-#the percent days in tolerance for rain and temperature aswell
-#as calculate the length of the edge
+
+=begin
+Edge takes in two nodes and calculates:
+  - weather the two nodes are within tolerance of each other using rain and temperature and accounting for days accuracy
+  - calcualtes the length of the edge using longitudes and latitudes, and the circumfrence of the earth
+
+=end
+
 class Edge
+  #tolerances whcih are static and set externally
   @percipTolerance=0;
   @tempTolerance=0;
   @daysAccuracy=0;
 
+=begin
+ takes in two nodes and calulates weateher the stations can predict each other and the length of the edge
+=end
   def initialize(node1, node2)
     @s1=node1
     @s2=node2
 
-    #pre-calculate all values
-    @canPredict = (Edge.checkTempTolerance(@s1.weather, @s2.weather) or Edge.checkRainTolerance(@s1.weather, @s2.weather))
+    #calculate length
     @length = Edge.distanceCalc(@s1,@s2)
   end
 
@@ -66,7 +74,7 @@ class Edge
   end
 
   def is_related?()
-    return @canPredict
+    return false#(checkTempTolerance(s1.weather, s2.weather) and checkRainTolerance(s1.weather, s2.weather))
   end
 
   def self.is_related?(s1,s2)
