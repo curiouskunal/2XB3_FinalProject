@@ -14,6 +14,16 @@ class Edge
   @tempTolerance=0;
   @daysAccuracy=0;
 
+
+=begin
+  sets the tolerances from values parsed by server
+=end
+  def self.setTolerances(rain,temp,days)
+    @percipTolerance = rain;
+    @tempTolerance = temp;
+    @daysAccuracy = days;
+  end
+
 =begin
  takes in two nodes and calulates weateher the stations can predict each other and the length of the edge
 =end
@@ -25,12 +35,9 @@ class Edge
     @length = Edge.distanceCalc(@s1,@s2)
   end
 
-  def self.setTolerances(rain,temp,days)
-    @percipTolerance = rain;
-    @tempTolerance = temp;
-    @daysAccuracy = days;
-  end
-
+=begin
+  Determins which station has less data and returns the length of that data
+=end
   def self.getLength(val1,val2)
     if (val2.length<val1.length)
       return val2.length;
@@ -74,7 +81,7 @@ class Edge
   end
 
   def is_related?()
-    return (checkTempTolerance(s1.weather, s2.weather) and checkRainTolerance(s1.weather, s2.weather))
+    return (checkTempTolerance(@s1.weather, @s2.weather) and checkRainTolerance(@s1.weather, @s2.weather))
   end
 
   def self.is_related?(s1,s2)
