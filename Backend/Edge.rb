@@ -74,7 +74,7 @@ class Edge
   end
 
   def is_related?()
-    return false#(checkTempTolerance(s1.weather, s2.weather) and checkRainTolerance(s1.weather, s2.weather))
+    return (checkTempTolerance(s1.weather, s2.weather) and checkRainTolerance(s1.weather, s2.weather))
   end
 
   def self.is_related?(s1,s2)
