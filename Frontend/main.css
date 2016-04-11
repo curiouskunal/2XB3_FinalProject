@@ -1,17 +1,26 @@
+/*no white borders*/
 html{ height: 100%}
+/*no white borders, do not allow scrolling*/
 body{ height: 100%; overflow:hidden; font-family: monospace}
 
-/*Colours*/
+/*Background Colours*/
 .bg1{background-color:  #3E72B3}
 .bg2{background-color:  #D5F9FF}
 
+
+/*progress bar and messages wraper*/
+#wrapper{
+  width: 100%;
+}
+
+/*Progress Bar*/
 #myProgress {
   position: relative;
   width: 100%;
   height: 30px;
   background-color: #ddd;
 }
-
+/*Progress bar bar*/
 #myBar {
   position: absolute;
   top: 50%;
@@ -20,20 +29,15 @@ body{ height: 100%; overflow:hidden; font-family: monospace}
   height: 100%;
   background-color: green;
 }
-
+/*Text on progress bar*/
 #label {
   text-align: center;
   line-height: 30px;
   color: white;
 }
-
+/*Update messages*/
 #msg {
-
 	line-height: 200px;
 	font-size: 50px;
-
 }
 
-#wrapper{
-	width: 100%;
-}

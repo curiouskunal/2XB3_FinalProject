@@ -7,20 +7,21 @@
 
     <!-- map Visualizer-->
     <script>window.$ = window.d3 = require("./d3/d3.min.js"); </script>
-
+    <!--ALL SCRIPTS-->
     <script src="main.js"></script>
 
-    <!--Stylr Sheet-->
+    <!--Style Sheet-->
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body class="">
 
-
+<body>
+<!--Form a left and right pane-->
 <table height="101%" width="101.7%" style="margin: -10px;">
     <!--------------------------------------------------------------------------->
     <!-------------------           input pane             ---------------------->
     <!--------------------------------------------------------------------------->
     <tr>
+        <!-------------------           Time Input             ---------------------->
         <td width="29.5%" class="bg1" style="vertical-align: top;text-align: center; color:white">
             <h1>Sample Period</h1>
             <table style="display: inline-block">
@@ -96,6 +97,7 @@
 
                 </tr>
             </table>
+            <!-------------------           Weather Tolerances             ---------------------->
             <h1>Tolerences</h1>
             <table style="display: inline-block">
                 <tr>
@@ -112,14 +114,21 @@
 
                 </tr>
             </table>
+            <!-------------------           Accuracy Tolerances             ---------------------->
             <h1>Accuracy Rating</h1>
             <input id="accuracy" type="number" min="0" placeholder="Days">
             <br>
             <br>
+            <!-------------------           Submit/Reset button             ---------------------->
             <button id="submitButton" onclick="CheckAndload()">Submit Query</button>
         </td>
+        <!--------------------------------------------------------------------------->
+        <!-------------------           Output pane             ---------------------->
+        <!--------------------------------------------------------------------------->
         <td class="bg2" style="vertical-align: top;text-align: center;">
+
             <div style="height: 10px"></div>
+            <!-------------------           Legend             ---------------------->
             <div style="vertical-align: middle; padding-bottom: 10px">
                 <a style="color: black; font-size: larger;">BLACK = INSUFFICIENT DATA</a>
                 <a style="color: #D5F9FF; font-size: larger;">___</a>
@@ -132,7 +141,7 @@
             </div>
 
 
-
+            <!-------------------           Load Bar             ---------------------->
             <div id="wrapper" style="text-align: center; padding-top:175px">
 
                     <div id="myProgress">
@@ -143,19 +152,16 @@
                     <div id="msg"></div>
 
             </div>
-            <svg id="map">
-
-
-
-
-            </svg>
+            <!-------------------           map             ---------------------->
+            <svg id="map"></svg>
         </td>
     </tr>
 
 </table>
 </body>
-
+<!--Script to be ran after page created-->
 <script>
+    //pass on d3 object, and intialize
     initialize(d3);
 </script>
 
