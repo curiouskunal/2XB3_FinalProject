@@ -79,6 +79,7 @@ class BackEnd
   end
 
   def self.trimEdges
+    self.createMST
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
       unless !edge.is_related?#or edge.cross @graphEdges
@@ -95,56 +96,6 @@ class BackEnd
       end
     end
   end
-
-  # def self.graph node=nil, x=nil, y=nil
-  #   if node == nil
-  #     @searchGrid.each_with_index do | row, _y|
-  #       row.each_with_index do | box, _x|
-  #         if box.any?
-  #           box.each do | n |
-  #             unless @visited.include? n
-  #               self.graph n, _x, _y
-  #             end
-  #           end
-  #         end
-  #       end
-  #     end
-  #   else
-  #     curr = node
-  #     @possibleEdges.push ( self.makeEdges curr, (self.adjacent curr, x, y))
-  #     @visited.add curr
-  #     until @possibleEdges.empty?
-  #       edge = @possibleEdges.pop
-  #       unless edge.cross @graphEdges
-  #         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
-  #           @graphEdges.add edge
-  #         else
-  #           next
-  #         end
-  #         a, b = edge.nodes
-  #         unless @graphNodes.include? a
-  #           @graphNodes.add a
-  #           @count += 1
-  #         end
-  #         unless @graphNodes.include? b
-  #           @graphNodes.add b
-  #         end
-  #         curr = unless @graphNodes.include? b
-  #                  b
-  #                else
-  #                  a
-  #                end
-  #         @visited.add curr
-  #
-  #         ( self.makeEdges curr, (self.adjacent curr, x, y)).each do |e|
-  #           unless @graphEdges.include? e or @graphEdges.include? e.reverse
-  #             @possibleEdges.push e
-  #           end
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 
   def self.makeEdges curr, nodes
     edges = Set.new
@@ -214,6 +165,32 @@ class BackEnd
 
   def self.getEdges()
     return @graphEdges
+  end
+
+  def self.createMST
+    visited = Set.new
+    edges = MinPQEdges.new
+    mst = Set.new
+    @graphEdges.each do |edge|
+      edges.add edge
+    end
+    until edges.empty?
+      edge = edges.pop
+      a, b = edges.nodes
+      if visited.include? a and not visited.include? b
+        visited.add b
+        mst.add edge
+      elsif visited.include? b and not visited.include? a
+        visited.add a
+        mst.add edge
+      elsif not visited.include? a and not visited.include? b
+        visited.add a
+        visited.add b
+        mst.add edge
+      end
+    end
+    @graphEdges = mst
+
   end
     
   def self.run
