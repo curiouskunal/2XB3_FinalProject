@@ -36,7 +36,7 @@ class Edge
   end
 
 =begin
-  Determins which station has less data and returns the length of that data
+  Determines which station has less days of data and returns the length of that station
 =end
   def self.getLength(val1,val2)
     if (val2.length<val1.length)
@@ -46,52 +46,10 @@ class Edge
     end
   end
 
-  def self.checkTempTolerance(val1, val2)
-    tmpVals=0.0;
-    leng=Edge.getLength(val1,val2)
-    for i in 0..(leng-1)
-     # puts i.to_s + ' at ' + val1[i].date.to_s + ' and ' + val2[i].date.to_s
-      if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
-        tmpVals=tmpVals+1
-      end
-    end
-    return (tmpVals+ @daysAccuracy)>=leng
-  end
-
-  def self.checkRainTolerance(val1, val2)
-    tmpVals=0.0;
-    leng=getLength(val1,val2)
-    for i in 0..(leng-1)
-      if (Edge.withinTolerance(val1[i].precipitation, val2[i].precipitation,  @percipTolerance))
-        tmpVals=tmpVals+1
-      end
-    end
-    return (tmpVals+  @daysAccuracy)>=leng
-  end
-
-  def self.withinTolerance(val1, val2, tolerance)
-    if (!val1 or !val2)
-      return false;
-    end
-
-    if (val1>val2)
-      return (val1-val2)<=tolerance
-    end
-    return (val2-val1)<=tolerance
-  end
-
-  def is_related?()
-    return (Edge.checkTempTolerance(@s1.weather, @s2.weather) and Edge.checkRainTolerance(@s1.weather, @s2.weather))
-  end
-
-  def self.is_related?(s1,s2)
-    return (Edge.checkTempTolerance(s1.weather, s2.weather) and Edge.checkRainTolerance(s1.weather, s2.weather))
-  end
-
-  def nodes()
-    return @s1, @s2
-  end
-
+=begin
+  This function using longitude and latitude as well as the circumfrence OF the earth,
+  using HAVERSINE formula
+=end
   def self.distanceCalc(s1, s2)
     radiusEarth=6371000;
     x1 = s1.location.longitude*(Math::PI/180.0)
@@ -100,17 +58,100 @@ class Edge
     y2 = s2.location.latitude*(Math::PI/180.0)
     deltaX = x1-x2
     deltaY=y1-y2
+    #haversine formula
     a = Math.sin(deltaX/2.0) * Math.sin(deltaX/2.0) + Math.cos(x1) * Math.cos(x2) * Math.sin(deltaY/2.0)* Math.sin(deltaY/2.0)
     circumfrence = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a))
 
     return radiusEarth * circumfrence
   end
 
+=begin
+  checks if the temperature is wihtin tolerance for the days of accuracy and returns a boolean
+=end
+  def self.checkTempTolerance(val1, val2)
+    # the number of days in tolerance
+    tmpVals=0.0;
+    # the number of days of data to be parsed
+    leng=Edge.getLength(val1,val2)
+    # for all the days
+    for i in 0..(leng-1)
+      # if the two stations are in tolerance
+      if (Edge.withinTolerance(val1[i].t_max, val2[i].t_max,   @tempTolerance) && Edge.withinTolerance(val1[i].t_min, val2[i].t_min,   @tempTolerance))
+        tmpVals=tmpVals+1
+      end
+    end
+    #if the number of days in tolerance + the accuracy is greater then ot equal to the numer of days the station passes
+    return (tmpVals+ @daysAccuracy)>=leng
+  end
+
+=begin
+  Checks if the percipatation accuracy is wihihin toleracne for the two stations
+=end
+  def self.checkRainTolerance(val1, val2)
+    # the number of days in tolerance
+    tmpVals=0.0;
+    # the number of days of data to be parsed
+    leng=Edge.getLength(val1,val2)
+    # for all the days
+    for i in 0..(leng-1)
+      # if the two stations are in tolerance
+      if (Edge.withinTolerance(val1[i].precipitation, val2[i].precipitation,  @percipTolerance))
+        tmpVals=tmpVals+1
+      end
+    end
+    #if the number of days in tolerance + the accuracy is greater then ot equal to the numer of days the station passes
+    return (tmpVals+  @daysAccuracy)>=leng
+  end
+
+=begin
+  the boolean which calculates the tolerance of any two articualr peices of data
+=end
+  def self.withinTolerance(val1, val2, tolerance)
+    # if neither piece of data exist it is not in toleracne
+    if (!val1 or !val2)
+      return false;
+    end
+    #if oen vlaue is greater then the oter then subtract one way
+    if (val1>val2)
+      return (val1-val2)<=tolerance
+    end
+    #else subtract the other way
+    return (val2-val1)<=tolerance
+  end
+
+=begin
+  Checks if the edge nodes can be sued to predict each other
+=end
+  def is_related?()
+    return (Edge.checkTempTolerance(@s1.weather, @s2.weather) and Edge.checkRainTolerance(@s1.weather, @s2.weather))
+  end
+
+=begin
+  Checks if the edge nodes can be sued to predict each other
+=end
+  def self.is_related?(s1,s2)
+    return (Edge.checkTempTolerance(s1.weather, s2.weather) and Edge.checkRainTolerance(s1.weather, s2.weather))
+  end
+
+=begin
+  getter for the nodes in the edge object
+=end
+  def nodes()
+    return @s1, @s2
+  end
+
+=begin
+  getter for the length of the edge
+=end
   def distance()
     return @length
   end
 
+=begin
+  greater then or equal function made specfically fro comparisons for minPQ
+=end
   def >= (other)
+    #compares by edge length
     return @length>=other.distance()
   end
 

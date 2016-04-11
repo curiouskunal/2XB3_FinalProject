@@ -82,7 +82,7 @@ class BackEnd
     self.createMST
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      unless !edge.is_related?#or edge.cross @graphEdges
+      unless false#!edge.is_related?#or edge.cross @graphEdges
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
           a, b = edge.nodes
