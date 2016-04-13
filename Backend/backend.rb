@@ -4,7 +4,13 @@ require './weather'
 require './Edge'
 require './minPQEdges'
 require 'set'
+=begin
+	BackEnd ADT
+=end
 class BackEnd
+=begin
+	Instance variables
+=end
   @searchGrid
   @visited = Set.new
   @graphNodes = Set.new
@@ -34,15 +40,22 @@ class BackEnd
       currentStation.add_weather (Weather.new row[5], row[6], row[7], row[8])
     end
   end
-
+=begin
+	data: Set.new
+	Assigns data to @fullStationList
+=end
   def self.setData(data)
       @fullStationList=data;
   end
-
+=begin
+	Returns @fullStationList
+=end
   def self.getData()
     return @fullStationList
   end
-
+=begin
+	Creates the @searchGrid
+=end
   def self.createGrid
     westLong, northLat = -125, 42
     eastLong, southLat = -114, 32
@@ -63,7 +76,9 @@ class BackEnd
       end
     end
   end
-
+=begin
+	Creates edges
+=end
   def self.createEdges
     @searchGrid.each_with_index do | row, _y|
       row.each_with_index do | box, _x|
@@ -77,12 +92,14 @@ class BackEnd
       end
     end
   end
-
+=begin
+	Trims edges that cross or are not related
+=end
   def self.trimEdges
     self.createMST
     until @possibleEdges.empty?
       edge = @possibleEdges.pop
-      unless false#!edge.is_related?#or edge.cross @graphEdges
+      unless edge.cross @graphEdges or !edge.is_related?
         unless @graphEdges.include? edge or @graphEdges.include? edge.reverse
           @graphEdges.add edge
           a, b = edge.nodes
@@ -96,7 +113,12 @@ class BackEnd
       end
     end
   end
-
+=begin
+	Makes edges
+	curr: current Station
+	nodes: Set of Stations
+	returns: Set of Edges between curr and eachother nodes
+=end
   def self.makeEdges curr, nodes
     edges = Set.new
     nodes.each do |node|
@@ -110,7 +132,12 @@ class BackEnd
     end
     edges
   end
-
+=begin
+	Returns nodes adjacent to node
+	node: weather Station
+	x, y: int x and y coordinates of node in @searchGrid
+	returns: Set of Stations
+=end
   def self.adjacent node, x, y
     adj = Set.new
     xs = [x-1, x, x+1]
@@ -133,7 +160,10 @@ class BackEnd
     end
     adj
   end
-
+=begin
+	Check related
+	returns: Hash[Station.code:String, Array of Stations it predicts including itself]
+=end
   def self.checkRelated
     graph = Hash.new
     @graphNodes.each do |node|
@@ -162,11 +192,15 @@ class BackEnd
     end
     graph
   end
-
+=begin
+	Returns @graphEdges
+=end
   def self.getEdges()
     return @graphEdges
   end
-
+=begin
+	creates Minimum Spanning Tree
+=end
   def self.createMST
     visited = Set.new
     edges = MinPQEdges.new
@@ -190,24 +224,15 @@ class BackEnd
       end
     end
     @graphEdges = mst
-
   end
-    
+=begin
+	Runs the backend
+=end
   def self.run
     dataFile = 'test3.csv'
     parse (dataFile)
-    # (-123..-112).each do |y|
-    #   (32..42).each do |x|
-    #     @fullStationList.push (Station.new 0, 0, 0, x,y)
-    #
-    #   end
-    # end
     createGrid()
-
-    # puts @searchGrid.to_s
-
     puts 'Finished Parsing'
-    # graph()
     createEdges
     puts 'Created Edges'
     trimEdges
@@ -220,5 +245,3 @@ class BackEnd
     puts 'done'
   end
 end
-
-#BackEnd.run
