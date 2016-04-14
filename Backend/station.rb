@@ -16,7 +16,6 @@ class Station
     @elevation = elev.to_i
     @code = code.to_s
     @name = name.to_s
-    @number_of_connections = 0
     @weather = []
   end
 =begin
@@ -54,12 +53,6 @@ class Station
 =end
   def name
     @name
-  end
-=begin
-  returns the number of connections to the station
-=end
-  def connections
-    @number_of_connections
   end
 =begin
   adds a weather day to the station
