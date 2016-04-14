@@ -56,18 +56,6 @@ class Station
     @name
   end
 =begin
-  increments the number of connections to the station
-=end
-  def inc_connections
-    @number_of_connections += 1
-  end
-=begin
-  decrements the number of connections to the station
-=end
-  def dec_connections
-    @number_of_connections -= 1
-  end
-=begin
   returns the number of connections to the station
 =end
   def connections
