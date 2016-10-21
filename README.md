@@ -1,7 +1,10 @@
 ###### 2XB3 Final Project: Group 25
 # Weather Station Analyzer
 
+ ![Application ScreenShot](Documentation/ScreenShot.jpg)
+
 ## How to run?
+
 #### Initializing program:
 Have node installed either through homebrew: `brew install node`
 or from the website: <https://nodejs.org/en/download/>
@@ -24,9 +27,9 @@ After initializing you can use `Launch.command` to run program after first launc
 
 example data point:
 
-STATION | STATION_NAME | ELEVATION | LATITUDE | LONGITUDE | DATE | PRCP | TMAX | TMIN
---- | --- | --- | --- | --- | --- | --- | ---
-GHCND:USR0000CTHO | THOMES CREEK CALIFORNIA CA US | 317 | 39.8644 | -122.6097 | 20020103 | 2 | 150 | 78
+| STATION           | STATION_NAME                  | ELEVATION | LATITUDE | LONGITUDE | DATE     | PRCP | TMAX | TMIN |
+| ----------------- | ----------------------------- | --------- | -------- | --------- | -------- | ---- | ---- | ---- |
+| GHCND:USR0000CTHO | THOMES CREEK CALIFORNIA CA US | 317       | 39.8644  | -122.6097 | 20020103 | 2    | 150  | 78   |
 
 All data parced into SQLit3 database
 
