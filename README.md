@@ -1,5 +1,5 @@
 ###### 2XB3 Final Project: Group 25
-# Weather Station Analizer
+# Weather Station Analyzer
 
 ## How to run?
 #### Initializing program:
