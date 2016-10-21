@@ -1,0 +1,21 @@
+Student	Information
+-------------------
+Course	Code:	SFWR ENG 2XB3
+Lab	Section: 	01
+
+Student Names | Student Number | Role
+
+Pedro Oliveira | 001430273 | Team Lead
+Pavithran Pathmarajah | 001410729 | Scrum Master
+Pareek Ravi | 001407109 | Senior Developer
+Kunal Shah | 001419350 | Software Developer
+
+By virtue of submitting this document we electronically sign and date that the work being submitted by all the individuals in the group is their exclusive work as a group and we consent to make available the application developed through [CS] or [SE]-2XB3 project, the reports, presentations, and assignments (not including my name and student number) for future teaching purposes. 
+
+April 13 2016
+
+
+Design Assumptions:
+
+Look at readme.txt for install and running instructions. 
+
