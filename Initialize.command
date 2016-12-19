@@ -19,14 +19,19 @@ echo ""
 echo "Installing all dependencies"
 echo ""
 
-gem install --no-rdoc --no-ri bundler
+sudo gem install --no-rdoc --no-ri bundler
 bundle install
 npm install
 
-echo ""
-echo "starting Weather Station Analizer"
+# unzip Databse
+cd .././Backend
+touch ./California.db
+rm ./California.db
+tar -xvzf ./California.zip
+cd .././Frontend
 
-npm start
+echo ""
+echo "You are ready to go"
 
 # hide terminal after quit
 #osascript -e "tell application \"System Events\" to keystroke \"w\" using command down"

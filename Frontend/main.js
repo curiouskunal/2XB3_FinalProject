@@ -144,8 +144,9 @@ function check(x) {
 function load() {
     //the load system works by reading a json file which the server writes too at each stage in the processing, and then depending on the laue fo that state the next load state will be shown
     //read json, file to get load status
+    try{
     d3.json("../Backend/load.json", function (error, json) {
-
+        try{
         // the json file ahs four attributes and as each one is set to true the script moves onto the next message
         if (!json.Graphs) {
             //message
@@ -199,7 +200,17 @@ function load() {
             //draw points, use 1 second delay, to ensure points are drawn on top of map
             setTimeout(drawPoints, 1000);
         }
+    }catch(err){
+        console.log("File not Found - Try Again");
+        load();
+        return;
+    }
     });
+    }catch(err){
+        console.log("File not Found - Try Again");
+        load();
+        return;
+    }
 }
 /*
  * this method draws the U.S map in the svg container
