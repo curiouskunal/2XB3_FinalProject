@@ -16,6 +16,8 @@ class Run
     a = Time.new()
     puts  a.to_f
 
+    BackEnd.resetVals();
+
     # Edge.setTolerances(20,20,20);
     # dataFile = 'test.csv';
     # BackEnd.parse (dataFile);

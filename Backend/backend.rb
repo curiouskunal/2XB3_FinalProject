@@ -17,7 +17,14 @@ class BackEnd
   @possibleEdges = MinPQEdges.new
   @fullStationList = Array.new
 
-
+  def self.resetVals
+    @searchGrid
+    @visited = Set.new
+    @graphNodes = Set.new
+    @graphEdges = Set.new
+    @possibleEdges = MinPQEdges.new
+    @fullStationList = Array.new
+  end
   #extracted from pareek's code
   def self.parse (dataFile)
     inputCSV = 'data/'+dataFile
