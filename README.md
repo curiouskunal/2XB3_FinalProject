@@ -1,7 +1,7 @@
 ###### 2XB3 Final Project: Group 25
 # Weather Station Analyzer
 
- ![Application ScreenShot](Documentation/ScreenShot.jpg)
+ ![Application ScreenShot](ReferenceMaterial/ScreenShot.jpg)
 
 ## How to run?
 
