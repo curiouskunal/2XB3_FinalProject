@@ -16,6 +16,8 @@ class Run
     a = Time.new()
     puts  a.to_f
 
+    BackEnd.resetVals();
+
     # Edge.setTolerances(20,20,20);
     # dataFile = 'test.csv';
     # BackEnd.parse (dataFile);
@@ -23,12 +25,6 @@ class Run
     # BackEnd.createEdges();
     # BackEnd.trimEdges();
     # puts BackEnd.graphEdges;
-
-
-    f = File.open("./load.json", 'w')
-    f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}')
-    f.close
-
 
     f = File.open("./load.json", 'w')
     f.write('{"Graphs":true, "Cutting":false, "Testing":false, "loading":false}')
