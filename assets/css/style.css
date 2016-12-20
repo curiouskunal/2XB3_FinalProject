@@ -49,7 +49,10 @@ p {
 img {
 	height: auto;
 	max-width: 50%;
+}
 
+li{
+	margin-left: 20px;
 }
 
 a { 
