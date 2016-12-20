@@ -24,12 +24,6 @@ class Run
     # BackEnd.trimEdges();
     # puts BackEnd.graphEdges;
 
-
-    f = File.open("./load.json", 'w')
-    f.write('{"Graphs":false, "Cutting":false, "Testing":false, "loading":false}')
-    f.close
-
-
     f = File.open("./load.json", 'w')
     f.write('{"Graphs":true, "Cutting":false, "Testing":false, "loading":false}')
     f.close

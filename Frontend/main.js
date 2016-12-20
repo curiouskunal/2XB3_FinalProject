@@ -46,6 +46,7 @@ app.on('window-all-closed', function () {
 //map info
 var width = 950,  height = 550;
 var svgContainer;
+var widthBar = 0;
 
 //D3 Library, for graphics
 var d3;
@@ -89,14 +90,14 @@ function increaseProgressBar(num) {
     //the laod bar is just a simple div tag, with CSS used to give the aperance of a laod bar
   var elem = document.getElementById("myBar");
     //if the width is >100% loading then do nothing leave the bar as is
-    if (width >= 100) {
+    if (widthBar >= 100) {
     } else {
         //set width to the laod amount specified
-        width = num;
+        widthBar = num;
         //sets the width of the object
-        elem.style.width =  width + '%';
+        elem.style.width =  widthBar + '%';
         //In the laod bar give a percentage to let user's know progress
-      document.getElementById("label").innerHTML = Math.floor(width) * 1  + '%';
+      document.getElementById("label").innerHTML = Math.floor(widthBar) * 1  + '%';
   }
 }
 
@@ -104,6 +105,10 @@ function increaseProgressBar(num) {
  * This method is called after all parameters have been checked for elagibilty and essentially passes them as a json to the server
  */
 function loadStuff() {
+    //intialize Values
+    width = 950;
+    height = 550;
+    widthBar = 0;
     //clear, the contents of the map, so it may be redrawn
     d3.selectAll("svg > *").remove();
     //create a query for the server
@@ -161,16 +166,16 @@ function load() {
             document.getElementById("msg").innerHTML = "Parsing Data";
             setTimeout(load, 50);
             //minimum load bar state at this point
-            if(width<20)
+            if(widthBar<20)
                 increaseProgressBar(20);
-            increaseProgressBar(width +.115);
+            increaseProgressBar(widthBar +.115);
             // next state in json file
         } else if (!json.Testing) {
             document.getElementById("msg").innerHTML = "Formulating Grid Network";
             setTimeout(load, 50);
-            if(width<40)
+            if(widthBar<40)
                 increaseProgressBar(40);
-            increaseProgressBar(width + .115);
+            increaseProgressBar(widthBar + .115);
         //next state in json file
         } else if (!json.loading) {
 
@@ -178,10 +183,10 @@ function load() {
 
             setTimeout(load, 50);
             //final stage, maximum laod is 97%
-           if(width>=97){
+           if(widthBar>=97){
                 increaseProgressBar(97);
             }else{
-                increaseProgressBar(width + .115);
+                increaseProgressBar(widthBar + .115);
             }
         // if all otheer joba re done we can show the final info
         } else {
@@ -201,15 +206,21 @@ function load() {
             setTimeout(drawPoints, 1000);
         }
     }catch(err){
+        console.log(err);
         console.log("File not Found - Try Again");
-        load();
-        return;
+        
+        setTimeout(function(){
+            load();
+            return;
+        },100);
     }
     });
     }catch(err){
         console.log("File not Found - Try Again");
-        load();
-        return;
+           setTimeout(function(){
+            load();
+            return;
+        },100);
     }
 }
 /*
