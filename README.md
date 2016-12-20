@@ -1,5 +1,10 @@
 # 2XB3:
 
+#How to run:
+Download [ruby shoes application](http://shoesrb.com/), (Mac OS version included in root dir)
+
+Open GUI.rb with shoes
+
 ## Languages:
 
 Back-End: Ruby and Ruby on rails
