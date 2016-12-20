@@ -91,9 +91,31 @@
 		 	<div class="col-lg-5 col-lg-offset-1">
 			 	<div class="spacing"></div>
 		 		<h4>Weather Station Analyzer</h4>
-		 		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-<!-- 		 		<h4>Our Proposal</h4>
-		 		<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+		 		<p>
+		 			Weather Station Analyzer is an application used to analyze weather station information
+		 			and determine which stations can predict the data of others.
+		 			The software will take in 5 input parameters: start year, sample period, temperature and
+		 			precipitation tolerance, and accuracy range. Using theses inputs the program will search, sort
+		 			and graph the requested stations, then identify which weather stations are redundant and may
+		 			be removed while keeping weather readings accurate.
+		 		</p>
+		 		<h4>Project Reflection</h4>
+		 		<p>
+		 		Results of this project where less than ideal. More stations were expected to be
+		 			predictable. If there are future attempts to implement this project there are a few things we
+		 			would do differently.
+		 			<ul>
+		 			<li>We would implement the database using MySQL instead of SQLite3 for the extra speed
+		 			gained for large data sets. This would also allow for more scalability as it could be used on a
+		 			external server rather than a local server</li>
+		 			<li>We would implement a Streaming API instead of a REST API, so that the large data set
+		 			would not be transmitted all at once.</li>
+		 			<li>We would further decouple the frontend from the backend and decouple the frontend
+		 			from the electron wrapper itself.</li>
+		 			</ul>
+
+		 		</p>
+
 		 	</div>
 		 	
 		 	<div class="col-lg-4 col-lg-offset-1">
@@ -135,11 +157,10 @@
 					</div>				
 
 		 		</div>
-
 		 	
-		 	</div><! --/row -->
-	 	</div><! --/container -->
-	 </div><! --/footerwrap -->
+		 	</div><!--/row -->
+	 	</div><!--/container -->
+	 </div><!--/footerwrap -->
 	 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -153,88 +174,7 @@
   	<script src="assets/js/jquery.isotope.min.js"></script>
   	<script src="assets/js/custom.js"></script>
 
-
-    <script>
-// Portfolio
-(function($) {
-	"use strict";
-	var $container = $('.portfolio'),
-		$items = $container.find('.portfolio-item'),
-		portfolioLayout = 'fitRows';
-		
-		if( $container.hasClass('portfolio-centered') ) {
-			portfolioLayout = 'masonry';
-		}
-				
-		$container.isotope({
-			filter: '*',
-			animationEngine: 'best-available',
-			layoutMode: portfolioLayout,
-			animationOptions: {
-			duration: 750,
-			easing: 'linear',
-			queue: false
-		},
-		masonry: {
-		}
-		}, refreshWaypoints());
-		
-		function refreshWaypoints() {
-			setTimeout(function() {
-			}, 1000);   
-		}
-				
-		$('nav.portfolio-filter ul a').on('click', function() {
-				var selector = $(this).attr('data-filter');
-				$container.isotope({ filter: selector }, refreshWaypoints());
-				$('nav.portfolio-filter ul a').removeClass('active');
-				$(this).addClass('active');
-				return false;
-		});
-		
-		function getColumnNumber() { 
-			var winWidth = $(window).width(), 
-			columnNumber = 1;
-		
-			if (winWidth > 1200) {
-				columnNumber = 5;
-			} else if (winWidth > 950) {
-				columnNumber = 4;
-			} else if (winWidth > 600) {
-				columnNumber = 3;
-			} else if (winWidth > 400) {
-				columnNumber = 2;
-			} else if (winWidth > 250) {
-				columnNumber = 1;
-			}
-				return columnNumber;
-			}       
-			
-			function setColumns() {
-				var winWidth = $(window).width(), 
-				columnNumber = getColumnNumber(), 
-				itemWidth = Math.floor(winWidth / columnNumber);
-				
-				$container.find('.portfolio-item').each(function() { 
-					$(this).css( { 
-					width : itemWidth + 'px' 
-				});
-			});
-		}
-		
-		function setPortfolio() { 
-			setColumns();
-			$container.isotope('reLayout');
-		}
-			
-		$container.imagesLoaded(function () { 
-			setPortfolio();
-		});
-		
-		$(window).on('resize', function () { 
-		setPortfolio();          
-	});
-})(jQuery);
-</script>
   </body>
 </html>
+
+<!-- Site Template source from : BlackTie.co Using "single-project" theme -->
