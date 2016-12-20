@@ -1,58 +1,95 @@
-###### 2XB3 Final Project: Group 25
-# Weather Station Analyzer
+# 2XB3:
 
- ![Application ScreenShot](Documentation/ScreenShot.jpg)
+## Languages:
 
-## How to run?
+Back-End: Ruby and Ruby on rails
+Front-End: To be decided, electron?
 
-#### Initializing program:
-Have node installed either through homebrew: `brew install node`
-or from the website: <https://nodejs.org/en/download/>
+## 2 Weeks:
 
-On a unix computer run `Initialize.command` by either
-using terminal or double clicking in file explorer
-this will intall all dependencies and launch program
-#### run program:
-After initializing you can use `Launch.command` to run program after first launch.
-
-## Modle - View - Contoler:
-
-	Back-End: Ruby
-	Front-End: electron wraped html and javascript
-	Controler: Sinatra Ruby server
-
-## Dataset:
-30 years of weather data for California from:
-[National Climatic Data Center](http://www.ncdc.noaa.gov/cdo-web/search)
-
-example data point:
-
-| STATION           | STATION_NAME                  | ELEVATION | LATITUDE | LONGITUDE | DATE     | PRCP | TMAX | TMIN |
-| ----------------- | ----------------------------- | --------- | -------- | --------- | -------- | ---- | ---- | ---- |
-| GHCND:USR0000CTHO | THOMES CREEK CALIFORNIA CA US | 317       | 39.8644  | -122.6097 | 20020103 | 2    | 150  | 78   |
-
-All data parced into SQLit3 database
+	- Application
+	- run form console
+	- takes in file name
+	- takes in tolerance level xdegree temp, %rain likliness
+	- claculations
+	- output, a graph of stations that are left and of all stations
 
 ## I/O:
-#### Input
-	- Start Year
-	- Sample Period
-	- Tolerences
-	- Temperature
-	- Precipitation
-	- Accuracy Rating
-#### Output
-	- Visual map with stations to keep and remove
-	- CSV file with more details
+
+### Input:
+	- Parsing csv file
+	- take in tolerance
+
+### Output:
+	- ruby shoes graphics, to show connections
+	- list of neded and uneeded
+
+## Algorthims:
+
+### Parsing:
+	- parse stations into, weather station objects. 
+	- each object has day object
+
+### % days - Calculations:
+	- % days temp in tolerance
+	- % days rain in tolerance
+
+### Searching/filter:
+	- remove stations that do not ahve data we need
+	- move valid objects into new file
+
+### Sorting:
+	- sort edges by, percentage tolerance after calulcating 
+	- efficent low memorey
+	- user specifes amount: ex.
+	- temp is between x degrees y percent of time
+	- same with rain chance
+
+### Graphing:
+	- split area into grid, than graph within grid block, anyblock in radius is searched vs. whole map
+
+### Relatdness Percentage:
+	- servie value?
+	- after calulcated. for each node sort and list. than delete any connections within toleracne since they are too similar.
+	- At the end if a sation ahs no connections going to it is uneeded
+
+## ADT:
+
+### Station Object:
+- Day object array - to hold data from that row in csv
+- Node: to hold the connections that will be made, and the %similarity based on given tolerances.
+- Variables:
+    - object ID
+    - memory id
+    - logitude and latitude
+    - increment connections
+    - decrement connections
+    - connections variable
 
 
-# Scrum:
-## Sprint 1
-	-CSV Parsing and Data Filtering
-	-Created Edges, with distance weights
-	-Initial Graphing
-	-Basic UI - in Ruby shoes
-## Sprint 2
-	- Ported Filter and Parsing to SQLite3
-	- Implemented Rest Server
-	- Finalized HTML doc for Electron Wrapper
+### Day:
+
+	- date
+	- percp
+	- temp
+	- high, low temp
+	- weather info
+
+### Edge:
+
+	- start - station
+	- end - station
+	- Percentage Tolerances - 
+	- everytime an edge is contructed increment station object connections by 1
+	- calculations algorthim
+
+# SCRUM:
+
+- Sprint: Feb 29 to Wed Mar 2
+
+## Stories: 
+
+- Filter: 					Kunal
+- Parsing + Sorting:  		Pareek
+- Station + Days: 			Pedro
+- Edges + %days calulations:	Pavi
