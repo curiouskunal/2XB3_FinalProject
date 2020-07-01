@@ -1,4 +1,4 @@
-###### 2XB3 Final Project: Group 25
+###### SFWR ENG 2XB3: Final Project Group 25
 # Weather Station Analyzer
 
  ![Application ScreenShot](ReferenceMaterial/ScreenShot.jpg)
